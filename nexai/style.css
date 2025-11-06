@@ -357,8 +357,11 @@ main {
 /* ============== НОВЫЕ СТИЛИ: ЛОГО-СКРОЛЛЕР ============== */
 /* ====================================================== */
 @keyframes scroll {
-    to {
-        transform: translate(calc(-50% - (var(--gap) / 2)));
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
     }
 }
 
@@ -374,7 +377,7 @@ main {
     display: flex;
     flex-wrap: nowrap;
     gap: var(--gap);
-    animation: scroll 40s linear infinite;
+    animation: scroll 80s linear infinite;
 }
 
 .logo-scroller:hover .logo-scroller-inner {
@@ -429,4 +432,7 @@ main {
 }
 #services.section {
     padding: 140px 0 10px 0; /* сверху 140px, снизу 60px */
+}
+.logo-scroller-inner {
+    width: max-content;
 }
