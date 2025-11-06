@@ -16,9 +16,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // ===== JAVASCRIPT ДЛЯ ГЕОМЕТРИЧЕСКОГО ФОНА =====
     function initStaticPattern() {
         const canvas = document.getElementById('patternCanvas');
-        if (!canvas) return; // Проверяем, есть ли canvas на странице
+        if (!canvas) return;
 
         const ctx = canvas.getContext('2d');
+        let animationId;
+        let time = 0;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -29,11 +31,15 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            const time = Date.now() * 0.001;
             const patternSize = 45;
+            const speed = 0.5; // Скорость движения
+
+            // Увеличиваем время для бесконечной анимации
+            time += speed;
 
             for (let x = patternSize; x < canvas.width; x += patternSize) {
                 for (let y = patternSize; y < canvas.height; y += patternSize) {
+                    // Используем time для создания бесконечного движения
                     const opacity = 0.1 + Math.sin(time * 0.8 + x * 0.01 + y * 0.01) * 0.08;
 
                     // Перекрестие
@@ -60,12 +66,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function stopAnimation() {
+            cancelAnimationFrame(animationId);
         }
 
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+
+        // Запускаем анимацию
         animate();
+
+        // Останавливаем анимацию при скрытии страницы для оптимизации
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopAnimation();
+            } else {
+                animate();
+            }
+        });
     }
 
     initStaticPattern();

@@ -425,8 +425,8 @@ main {
     overflow: hidden;
     -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
     mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-    padding: 20px 20; /*отступы сверху/снизу */
+    padding: 30px 20; /*отступы сверху/снизу */
 }
 #services.section {
-    padding: 140px 0 20px 0; /* сверху 140px, снизу 60px */
+    padding: 140px 0 10px 0; /* сверху 140px, снизу 60px */
 }
