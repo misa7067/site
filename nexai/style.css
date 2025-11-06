@@ -393,3 +393,40 @@ main {
     fill: var(--text-primary);
     opacity: 1;
 }
+/* ====================================================== */
+/* ============== УВЕЛИЧЕННЫЕ ЛОГОТИПЫ ============== */
+/* ====================================================== */
+
+.tech-stack-block {
+    margin: 60px 0;
+}
+
+.logo-scroller-inner svg {
+    height: 50px; /* Увеличиваем*/
+    width: auto;
+    fill: var(--text-secondary);
+    opacity: 0.7;
+    transition: opacity 0.3s, fill 0.3s;
+    flex-shrink: 0;
+}
+
+/* Увеличиваем расстояние между логотипами */
+.logo-scroller-inner {
+    --gap: 2rem; /*расстояние */
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--gap);
+    animation: scroll 20s linear infinite;
+}
+
+/* Увеличиваем отступы блока */
+.logo-scroller {
+    max-width: 100%;
+    overflow: hidden;
+    -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+    mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+    padding: 20px 20; /*отступы сверху/снизу */
+}
+#services.section {
+    padding: 140px 0 20px 0; /* сверху 140px, снизу 60px */
+}
