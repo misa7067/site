@@ -354,15 +354,11 @@ main {
 }
 
 /* ====================================================== */
-/* ============== НОВЫЕ СТИЛИ: ЛОГО-СКРОЛЛЕР ============== */
+/* ============== СТИЛИ ЛОГО-СКРОЛЛЕРА ============== */
 /* ====================================================== */
 @keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 .logo-scroller {
@@ -370,14 +366,16 @@ main {
     overflow: hidden;
     -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
     mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+    padding: 30px 20px; /* ИСПРАВЛЕНО */
 }
 
 .logo-scroller-inner {
-    --gap: 3rem;
+    --gap: 2rem;
     display: flex;
     flex-wrap: nowrap;
     gap: var(--gap);
-    animation: scroll 80s linear infinite;
+    animation: scroll 20s linear infinite;
+    width: max-content;
 }
 
 .logo-scroller:hover .logo-scroller-inner {
@@ -385,27 +383,7 @@ main {
 }
 
 .logo-scroller-inner svg {
-    height: 40px;
-    width: auto;
-    fill: var(--text-secondary);
-    opacity: 0.7;
-    transition: opacity 0.3s, fill 0.3s;
-}
-
-.logo-scroller:hover .logo-scroller-inner svg {
-    fill: var(--text-primary);
-    opacity: 1;
-}
-/* ====================================================== */
-/* ============== УВЕЛИЧЕННЫЕ ЛОГОТИПЫ ============== */
-/* ====================================================== */
-
-.tech-stack-block {
-    margin: 60px 0;
-}
-
-.logo-scroller-inner svg {
-    height: 50px; /* Увеличиваем*/
+    height: 50px;
     width: auto;
     fill: var(--text-secondary);
     opacity: 0.7;
@@ -413,26 +391,242 @@ main {
     flex-shrink: 0;
 }
 
-/* Увеличиваем расстояние между логотипами */
-.logo-scroller-inner {
-    --gap: 2rem; /*расстояние */
-    display: flex;
-    flex-wrap: nowrap;
-    gap: var(--gap);
-    animation: scroll 20s linear infinite;
+.logo-scroller:hover .logo-scroller-inner svg {
+    fill: var(--text-primary);
+    opacity: 1;
 }
 
-/* Увеличиваем отступы блока */
-.logo-scroller {
-    max-width: 100%;
-    overflow: hidden;
-    -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-    mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-    padding: 30px 20; /*отступы сверху/снизу */
-}
 #services.section {
-    padding: 140px 0 10px 0; /* сверху 140px, снизу 60px */
+    padding: 140px 0 10px 0;
 }
-.logo-scroller-inner {
-    width: max-content;
+
+
+/* ====================================================== */
+/* ============== СТИЛИ ДЛЯ СЕКЦИИ КЕЙСОВ ============== */
+/* ====================================================== */
+
+body.modal-open { overflow: hidden; }
+
+#projects .project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+#projects .project-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #0A0A0A;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+    height: 100%;
+    cursor: pointer;
+}
+
+#projects .project-card-link:hover .project-card {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+#projects .project-card-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 16/10;
+}
+
+#projects .project-card-content { padding: 25px; flex-grow: 1; }
+#projects .project-card-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; }
+#projects .project-card-summary { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+
+#projects .projects-slider-wrapper { position: relative; overflow: hidden; padding: 0 40px; }
+#projects .projects-slider-track { display: flex; transition: transform 0.5s ease-in-out; }
+#projects .project-slide { flex: 0 0 100%; width: 100%; box-sizing: border-box; padding: 0 10px; }
+#projects .project-card-container-in-slide { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+
+#projects .slider-controls {
+    position: absolute; top: 50%; left: 0; right: 0;
+    transform: translateY(-50%);
+    display: flex; justify-content: space-between;
+    pointer-events: none;
+}
+
+#projects .slider-arrow {
+    pointer-events: all; background-color: rgba(10, 10, 10, 0.5);
+    border: 1px solid var(--border); color: var(--text-primary);
+    width: 50px; height: 50px; border-radius: 50%;
+    font-size: 1.5rem; cursor: pointer;
+    transition: all 0.2s ease; backdrop-filter: blur(5px); z-index: 5;
+}
+#projects .slider-arrow:hover { background-color: var(--accent); }
+
+#project-modal-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+    z-index: 1000; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#project-modal-overlay.active { opacity: 1; pointer-events: all; }
+
+#project-modal {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 95%;
+    max-width: 950px;
+    max-height: 95vh;
+    background-color: #0A0A0A; border: 1px solid var(--border);
+    border-radius: 12px; z-index: 1001; overflow-y: auto;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#project-modal.active {
+    opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: all;
+}
+
+.modal-close-btn {
+    position: absolute; top: 15px; right: 15px;
+    background: none; border: none; color: var(--text-secondary);
+    font-size: 2rem; line-height: 1; cursor: pointer; transition: color 0.2s; z-index: 10;
+}
+.modal-close-btn:hover { color: var(--text-primary); }
+
+.modal-gallery-wrapper { position: relative; margin-bottom: 30px; }
+.split-layout { display: flex; gap: 10px; height: 400px; }
+.left-side { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.right-side { flex: 1; }
+.top-half, .bottom-half { flex: 1; overflow: hidden; }
+.split-image, .full-image { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+.left-side .top-half, .left-side .bottom-half { position: relative; }
+
+.modal-gallery-arrow {
+    position: absolute; top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff; width: 40px; height: 40px; border-radius: 50%;
+    font-size: 1.2rem; cursor: pointer; transition: all 0.2s;
+    display: none;
+}
+.modal-gallery-arrow:hover { background-color: rgba(0, 0, 0, 0.7); }
+.modal-gallery-arrow.prev { left: 15px; }
+.modal-gallery-arrow.next { right: 15px; }
+.modal-gallery-arrow.visible { display: block; }
+
+.modal-gallery-counter {
+    position: absolute; bottom: 15px; right: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 4px 10px; border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    display: none;
+}
+.modal-gallery-counter.visible { display: block; }
+
+.modal-content-wrapper { padding: 40px; }
+.modal-title { font-size: 2.2rem; margin-bottom: 15px; color: var(--accent); font-family: 'IBM Plex Mono', monospace; }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+.modal-tags span {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+    background-color: rgba(48, 138, 191, 0.1); color: var(--accent);
+    padding: 5px 12px; border-radius: 4px;
+}
+.modal-description p { color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem; }
+.modal-description h4 { color: var(--text-primary); margin-top: 25px; margin-bottom: 10px; font-size: 1.2rem; }
+
+@media (max-width: 1200px) {
+    #projects .project-card-container-in-slide { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    #projects .project-card-container-in-slide { grid-template-columns: 1fr; }
+    #projects .projects-slider-wrapper { padding: 0; }
+    #projects .slider-controls { display: none; }
+    .modal-content-wrapper { padding: 25px; }
+    .modal-title { font-size: 1.8rem; }
+    .split-layout { flex-direction: column; height: auto; }
+    .left-side, .right-side { height: 200px; }
+}
+/* ====================================================== */
+/* =================== СТИЛИ ДЛЯ ФУТЕРА =================== */
+/* ====================================================== */
+
+.main-footer {
+    background-color: #050505; /* Немного светлее основного фона для выделения */
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 5; /* Убедимся, что футер выше фона, но ниже модальных окон */
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Первая колонка шире */
+    gap: 40px;
+}
+
+.footer-column h5 {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.footer-logo {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 300px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.footer-column ul a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.footer-column ul a:hover {
+    color: var(--accent);
+}
+
+/* Адаптивность для футера */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr; /* Все колонки в один столбец */
+        text-align: center;
+    }
+
+    .copyright {
+        margin: 0 auto; /* Центрируем текст копирайта */
+    }
+
+    .footer-column {
+        margin-bottom: 30px;
+    }
 }

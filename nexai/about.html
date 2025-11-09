@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexAI | Наш инженер</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --background: #000000;
+            --text-primary: #EAEAEA;
+            --text-secondary: #888888;
+            --accent: #308ABF;
+            --border: #222222;
+            --font-main: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 112.5%; }
+        body { background-color: var(--background); color: var(--text-primary); font-family: var(--font-main); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        #patternCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        main { position: relative; z-index: 2; background-color: transparent; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+        .section { padding: 140px 0; position: relative; z-index: 1; background-color: var(--background); }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .main-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 10; padding: 20px 0; border-bottom: 1px solid var(--border); background-color: rgba(0,0,0,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: block; text-decoration: none; color: var(--text-primary); font-family: var(--font-mono); font-weight: 600; font-size: 1.5rem;}
+        .main-nav a { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-primary); text-decoration: none; margin-left: 35px; transition: color 0.2s; line-height: 35px; }
+        .main-nav a:hover { color: var(--accent); }
+
+        .engineer-intro-block { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; margin-bottom: 120px; }
+        .engineer-photo { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 2px solid var(--border); }
+        .engineer-info .title { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; }
+        .engineer-info .name { font-family: var(--font-mono); font-size: 3rem; font-weight: 600; color: var(--text-primary); }
+
+        .path-intro { text-align: center; max-width: 65ch; margin: 0 auto 80px auto; }
+        .path-intro .sub-heading { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; }
+        .path-intro p { font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary); }
+
+        .timeline-list { list-style: none; padding-left: 20px; position: relative; border-left: 1px solid var(--border); }
+        .timeline-item { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; padding: 30px 0 50px 40px; position: relative; }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-item::before { content: ''; position: absolute; left: -8px; top: 42px; width: 15px; height: 15px; border-radius: 50%; background-color: var(--background); border: 2px solid var(--accent); z-index: 1; }
+        .timeline-step h3 { font-size: 1.3rem; font-weight: 600; color: var(--text-primary); }
+        .timeline-description p { color: var(--text-secondary); line-height: 1.7; max-width: 65ch; }
+
+        .timeline-description h4 { font-size: 1rem; color: var(--text-secondary); font-weight: 500; margin-top: 25px; margin-bottom: 15px; }
+        .achievements-list { display: flex; flex-wrap: wrap; gap: 15px; padding-top: 10px; }
+        .achievement-badge { display: inline-flex; align-items: center; gap: 8px; background-color: #0A0A0A; border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; transition: all 0.2s ease-in-out; cursor: pointer; }
+        .achievement-badge:hover { background-color: #101010; border-color: var(--accent); color: var(--text-primary); transform: translateY(-2px); }
+        .achievement-badge svg { width: 16px; height: 16px; stroke: var(--accent); flex-shrink: 0; }
+
+        .lightbox-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            backdrop-filter: blur(8px);
+        }
+        .lightbox-overlay.visible { opacity: 1; visibility: visible; }
+        .lightbox-image {
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .lightbox-overlay.visible .lightbox-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .lightbox-close-btn {
+            position: fixed;
+            top: 20px; right: 20px;
+            background-color: rgba(10, 10, 10, 0.5);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .lightbox-close-btn:hover {
+            background-color: rgba(30, 30, 30, 0.8);
+            transform: scale(1.1);
+        }
+
+        .main-footer { padding: 40px 0; text-align: center; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.9rem; position: relative; z-index: 2; background: var(--background); }
+
+        @media (max-width: 768px) {
+            .engineer-intro-block { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+            .engineer-photo { margin: 0 auto; }
+            .engineer-info .name { font-size: 2.5rem; }
+            .timeline-item { grid-template-columns: 1fr; padding-left: 25px; gap: 20px; }
+            .timeline-list { padding-left: 10px; }
+            .timeline-item::before { left: -8px; top: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">NexAI</a>
+            <nav class="main-nav">
+                <a href="index.html#services">Услуги</a>
+                <a href="engineer.html">Наш подход</a>
+                <a href="index.html#projects">Проекты</a>
+                <a href="index.html#contact">Связаться</a>
+            </nav>
+        </div>
+    </header>
+
+    <canvas id="patternCanvas"></canvas>
+
+    <main>
+        <section id="engineer-page" class="section">
+            <div class="container">
+
+                <div class="engineer-intro-block reveal">
+                    <img src="path/to/your-photo.jpg" alt="Имя Фамилия" class="engineer-photo">
+                    <div class="engineer-info">
+                        <div class="title">Основатель и ведущий инженер NexAI</div>
+                        <div class="name">Имя Фамилия</div>
+                    </div>
+                </div>
+
+                <div class="path-intro reveal">
+                    <h3 class="sub-heading">Путь к экспертизе</h3>
+                    <p>Принципы NexAI — надежность, скорость и прозрачность — не просто слова. Это результат пути от академических знаний до создания систем для реального бизнеса. Ниже — ключевые этапы, которые сформировали наш подход к работе.</p>
+                </div>
+
+                <ol class="timeline-list">
+                    <li class="timeline-item reveal">
+                        <div class="timeline-step">
+                            <h3>Фундамент и инструментарий</h3>
+                        </div>
+                        <div class="timeline-description">
+                            <p>Первым шагом к систематизации знаний стали курсы от SkillFactory. Они позволили быстро погрузиться в среду и освоить базовый инструментарий. Однако стало очевидно, что шаблонные учебные задачи имеют мало общего с реальными проектами, где нет готовых ответов и идеальных условий.</p>
+                        </div>
+                    </li>
+                    <li class="timeline-item reveal">
+                        <div class="timeline-step">
+                            <h3>Закрепление основ через преподавание</h3>
+                        </div>
+                        <div class="timeline-description">
+                            <p>Следующим этапом стало преподавание в рамках государственной образовательной программы от 1С. Я работал со школьниками, и моей задачей было не просто дать материал по Python и SQL, а научить их вникать в основы, строить простые интерфейсы и писать свои первые скрипты. Этот опыт закрепил мое собственное понимание фундаментальных принципов разработки.</p>
+                            <h4>Подтверждено сертификатами:</h4>
+                            <div class="achievements-list">
+                                <span class="achievement-badge" data-image-src="certificates/cert-1.jpg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                    <span>Сертификат 1С (1)</span>
+                                </span>
+                                <span class="achievement-badge" data-image-src="certificates/cert-2.jpg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                    <span>Сертификат 1С (2)</span>
+                                </span>
+                                <span class="achievement-badge" data-image-src="certificates/cert-3.jpg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                    <span>Сертификат 1С (3)</span>
+                                </span>
+                                <span class="achievement-badge" data-image-src="certificates/cert-4.jpg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                    <span>Сертификат 1С (4)</span>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-item reveal">
+                        <div class="timeline-step">
+                            <h3>От кода к архитектуре в реальных проектах</h3>
+                        </div>
+                        <div class="timeline-description">
+                            <p>Полученный фундамент я начал применять на фриланс-платформах. Сначала это было репетиторство для широкого круга людей — от 9 до 40 лет. Параллельно я перешел к самостоятельной работе над первыми заказами: от учебных проектов и небольших скриптов до комплексных бизнес-задач. Иногда меня приглашали для усиления в уже существующие команды. С ростом сложности проектов фокус естественным образом сместился с простого "написания кода" на продуманную архитектуру: создание систем, которые не только решают текущую задачу, но и готовы к будущему росту и изменениям.</p>
+                             <h4>Академическое признание:</h4>
+                             <div class="achievements-list">
+                                 <span class="achievement-badge" data-image-src="certificates/diploma.jpg">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V6.5A2.5 2.5 0 1 0 7.5 4H6" /><path d="M12 18H7.5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2H10" /><path d="M18 4h-2.5a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h2.5" /><path d="M18 11.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" /><path d="M12 6.5V18" /></svg>
+                                     <span>Проект, отмеченный за качество архитектуры</span>
+                                 </span>
+                             </div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2024 NexAI. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <div class="lightbox-overlay" id="certificateLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">&times;</button>
+        <img src="" alt="Сертификат" class="lightbox-image" id="lightboxImage">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+
+            function initStaticPattern() {
+                const canvas = document.getElementById('patternCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                function animate() {
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    const time = Date.now() * 0.001;
+                    const patternSize = 45;
+                    for (let x = patternSize; x < canvas.width; x += patternSize) {
+                        for (let y = patternSize; y < canvas.height; y += patternSize) {
+                            const opacity = 0.1 + Math.sin(time * 0.8 + x * 0.01 + y * 0.01) * 0.08;
+                            ctx.strokeStyle = `rgba(150, 150, 170, ${opacity})`;
+                            ctx.lineWidth = 1.2;
+                            ctx.beginPath(); ctx.moveTo(x, y - patternSize/2.5); ctx.lineTo(x, y + patternSize/2.5); ctx.stroke();
+                            ctx.beginPath(); ctx.moveTo(x - patternSize/2.5, y); ctx.lineTo(x + patternSize/2.5, y); ctx.stroke();
+                            ctx.fillStyle = `rgba(180, 180, 200, ${opacity})`;
+                            ctx.beginPath(); ctx.arc(x, y, 1.5, 0, Math.PI * 2); ctx.fill();
+                        }
+                    }
+                    requestAnimationFrame(animate);
+                }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                animate();
+            }
+            initStaticPattern();
+
+            const certificateBadges = document.querySelectorAll('.achievement-badge');
+            const lightbox = document.getElementById('certificateLightbox');
+            const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+            const lightboxImage = document.getElementById('lightboxImage');
+
+            if (lightbox && lightboxImage && certificateBadges.length > 0) {
+                const openLightbox = (imgSrc) => {
+                    lightboxImage.setAttribute('src', imgSrc);
+                    lightbox.classList.add('visible');
+                    document.body.style.overflow = 'hidden';
+                };
+                const closeLightbox = () => {
+                    lightbox.classList.remove('visible');
+                    document.body.style.overflow = '';
+                };
+                certificateBadges.forEach(badge => {
+                    const imgSrc = badge.getAttribute('data-image-src');
+                    if (imgSrc) {
+                        badge.addEventListener('click', () => openLightbox(imgSrc));
+                    }
+                });
+                closeLightboxBtn.addEventListener('click', closeLightbox);
+                lightbox.addEventListener('click', (event) => {
+                    if (event.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && lightbox.classList.contains('visible')) {
+                        closeLightbox();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

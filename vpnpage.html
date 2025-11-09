@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexGate | VPN, который всегда работает</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #000000;
+            --text-primary: #EAEAEA;
+            --text-secondary: #888888;
+            --accent: #308ABF;
+            --border: #222222;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background-color: #0A0A0A;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .logo span { color: var(--accent); }
+        .tagline { color: var(--text-secondary); margin-bottom: 30px; }
+        .price {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .price span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; }
+        ul { list-style: none; text-align: left; margin: 30px auto; display: inline-block; }
+        ul li { margin-bottom: 15px; display: flex; align-items: center; }
+        ul li svg { width: 20px; height: 20px; stroke: var(--accent); margin-right: 10px; flex-shrink: 0; }
+        .cta-button {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            color: #000000;
+            background-color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 15px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            margin-top: 20px;
+        }
+        .cta-button:hover { background-color: transparent; color: var(--accent); }
+
+        .faq { max-width: 550px; text-align: left; }
+        .faq h4 { font-family: 'IBM Plex Mono', monospace; color: var(--accent); margin-bottom: 15px; }
+        .faq p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+        .faq p strong { color: var(--text-primary); font-weight: 500; }
+
+        .footer-note { margin-top: 40px; font-size: 0.8rem; color: var(--text-secondary); }
+        .footer-note a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border); }
+        .footer-note a:hover { color: var(--text-primary); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Nex<span>Gate</span></div>
+        <p class="tagline">Приватный VPN, который всегда работает</p>
+
+        <div class="price">$8 <span>/ месяц</span></div>
+
+        <ul>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                <span>Автоматический обход блокировок (DPI)</span>
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                <span>Динамическая маскировка трафика</span>
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                <span>Работает на всех устройствах, включая ТВ</span>
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                <span>Полная приватность, никаких логов</span>
+            </li>
+        </ul>
+
+        <a href="https://t.me/your_telegram_username" target="_blank" class="cta-button">[ Получить доступ ]</a>
+    </div>
+
+    <div class="faq">
+        <h4>Как это работает?</h4>
+        <p>Мы предоставляем универсальную ссылку-подписку. Вы добавляете ее в рекомендованное приложение, и оно автоматически получает доступ ко всем нашим протоколам, включая быстрые и замаскированные. Приложение само выберет лучший вариант для вашей сети.</p>
+        <br>
+        <h4>Работает с LG/Samsung/Apple TV?</h4>
+        <p><strong>Да.</strong> Для этих устройств мы предоставляем простую инструкцию по настройке VPN на вашем домашнем роутере. Это позволит защитить не только телевизор, но и все устройства в вашем доме. Мы поможем подобрать совместимый роутер, если потребуется.</p>
+    </div>
+
+    <p class="footer-note">Сервис предоставляется командой <a href="index.html" target="_blank">NexAI</a></p>
+</body>
+</html>
