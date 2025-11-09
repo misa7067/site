@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const patternSize = 45;
-            const speed = 0.5; // Скорость движения
+            const speed = 0.1; // Скорость движения
 
             // Увеличиваем время для бесконечной анимации
             time += speed;

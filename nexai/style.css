@@ -358,7 +358,7 @@ main {
 /* ====================================================== */
 @keyframes scroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(-40%); }
 }
 
 .logo-scroller {
@@ -366,7 +366,7 @@ main {
     overflow: hidden;
     -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
     mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-    padding: 30px 20px; /* ИСПРАВЛЕНО */
+    padding: 30px 60px; /* ИСПРАВЛЕНО */
 }
 
 .logo-scroller-inner {
