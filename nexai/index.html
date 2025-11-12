@@ -1,3 +1,5 @@
+[file name]: index.html
+[file content begin]
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -130,16 +132,16 @@
                 </div>
                 <div class="projects-slider-wrapper">
                     <div class="projects-slider-track">
+                        <!-- Слайд 1 -->
                         <div class="project-slide">
                             <div class="project-card-container-in-slide">
-
                                 <!-- Карточка 1 -->
                                 <a href="#" class="project-card-link"
-                                   data-images="1.jpg, 2.png, 3.png, 4.png, 5.png"
+                                   data-images="projects\1\arb1.png, projects\1\arb2.png, projects\1\arb3.png"
                                    data-tags="Python,API,PostgreSQL"
                                    data-full-description="<h4>Задача:</h4><p>Компания столкнулась с проблемами ручной обработки логистических заявок: постоянные ошибки в документах, потеря заказов и, как следствие, финансовые убытки.</p><h4>Решение:</h4><p>Мы разработали централизованную систему, которая подключается к различным источникам заказов по API, автоматически распределяет их и генерирует всю необходимую документацию.</p><h4>Итог:</h4><p>Скорость обработки заказов выросла в 3 раза, а финансовые потери из-за человеческого фактора были полностью исключены.</p>">
                                     <div class="project-card">
-                                            <div class="project-card-image"><img src="4.png" alt="Автоматизация логистики" loading="lazy"></div>
+                                        <div class="project-card-image"><img src="4.png" alt="Автоматизация логистики" loading="lazy"></div>
                                         <div class="project-card-content">
                                             <h3 class="project-card-title">Автоматизация логистики</h3>
                                             <p class="project-card-summary">Единая система автоматически обрабатывает заказы и генерирует документы.</p>
@@ -148,22 +150,22 @@
                                 </a>
 
                                 <!-- Карточка 2 -->
-                                 <a href="#" class="project-card-link"
-                                   data-images="1.png, 2.png, 4.png, 3.png"
-                                   data-tags="React,Node.js,Telegram Bot"
-                                   data-full-description="<h4>Задача:</h4><p>Менеджеры застройщика тратили до 40% рабочего времени на однотипные звонки и сообщения от клиентов, которые хотели узнать о статусе строительства.</p><h4>Решение:</h4><p>Был создан клиентский портал (личный кабинет) на React, где каждый дольщик может в любое время суток посмотреть актуальные фотоотчеты со стройки и отследить график работ.</p><h4>Итог:</h4><p>Нагрузка на отдел по работе с клиентами снизилась на 40%, а лояльность клиентов значительно выросла.</p>">
+                                <a href="#" class="project-card-link"
+                                   data-images="projects\2\bot.png, projects\2\bot1.png, projects\2\bot2.png"
+                                   data-tags="Pandas,SQL,Plotly"
+                                   data-full-description="<h4>Задача:</h4><p>Руководство получало десятки разрозненных Excel-отчетов с опозданием.</p><h4>Решение:</h4><p>Разработали дашборд, который в реальном времени собирает данные о продажах и рентабельности.</p>">
                                     <div class="project-card">
-                                        <div class="project-card-image"><img src="https://images.unsplash.com/photo-1600585154340-be6164a83639?q=80&w=400&auto=format&fit=crop" alt="Проект 2" loading="lazy"></div>
+                                        <div class="project-card-image"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop" alt="Проект 3" loading="lazy"></div>
                                         <div class="project-card-content">
-                                            <h3 class="project-card-title">Портал для застройщика</h3>
-                                            <p class="project-card-summary">Клиент 24/7 видит фотоотчеты и статус работ, снизив нагрузку на менеджеров.</p>
+                                            <h3 class="project-card-title">Аналитический дашборд</h3>
+                                            <p class="project-card-summary">Дашборд в реальном времени собирает данные о продажах и рентабельности.</p>
                                         </div>
                                     </div>
                                 </a>
 
                                 <!-- Карточка 3 -->
-                                 <a href="#" class="project-card-link"
-                                   data-images="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop, https://images.unsplash.com/photo-1484417894907-623942c8ee29?q=80&w=800&auto=format&fit=crop"
+                                <a href="#" class="project-card-link"
+                                   data-images="projects\3\doge1.jpg, projects\3\doge2.jpg, projects\3\doge3.jpg"
                                    data-tags="Pandas,SQL,Plotly"
                                    data-full-description="<h4>Задача:</h4><p>Руководство получало десятки разрозненных Excel-отчетов с опозданием.</p><h4>Решение:</h4><p>Разработали дашборд, который в реальном времени собирает данные о продажах и рентабельности.</p>">
                                     <div class="project-card">
@@ -176,21 +178,55 @@
                                 </a>
 
                                 <!-- Карточка 4 -->
-                                 <a href="#" class="project-card-link"
-                                   data-images="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=800&auto=format&fit=crop"
-                                   data-tags="API,amoCRM"
-                                   data-full-description="<h4>Задача:</h4><p>Данные о клиентах и заказах приходилось вручную переносить между системами.</p><h4>Решение:</h4><p>Настроена бесшовная синхронизация данных. Теперь заказ с сайта автоматически создает сделку в amoCRM и резервирует товар на складе.</p>">
+                                <a href="#" class="project-card-link"
+                                   data-images="projects\4\hardy1.png, projects\4\hardy2.jpg, projects\4\hardy3.png"
+                                   data-tags="Pandas,SQL,Plotly"
+                                   data-full-description="<h4>Задача:</h4><p>4Руководство получало десятки разрозненных Excel-отчетов с опозданием.</p><h4>Решение:</h4><p>Разработали дашборд, который в реальном времени собирает данные о продажах и рентабельности.</p>">
                                     <div class="project-card">
-                                        <div class="project-card-image"><img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=400&auto=format&fit=crop" alt="Проект 4" loading="lazy"></div>
+                                        <div class="project-card-image"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop" alt="Проект 3" loading="lazy"></div>
                                         <div class="project-card-content">
-                                            <h3 class="project-card-title">Интеграция с CRM</h3>
-                                            <p class="project-card-summary">Бесшовная синхронизация данных между сайтом, складом и системой учета.</p>
+                                            <h3 class="project-card-title">Аналитический дашборд</h3>
+                                            <p class="project-card-summary">Дашборд в реальном времени собирает данные о продажах и рентабельности.</p>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <!-- При необходимости здесь можно добавить второй <div class="project-slide"> -->
+
+                        <!-- Слайд 2 -->
+                        <div class="project-slide">
+                            <div class="project-card-container-in-slide">
+                                <!-- Карточка 5 -->
+                                <a href="#" class="project-card-link"
+                                   data-images="projects\5\inter1.png, projects\5\inter2.png, projects\5\inter3.png, projects\5\inter4.png, projects\5\inter5.png, projects\5\inter6.png"
+                                   data-tags="Python,API,PostgreSQL"
+                                   data-full-description="<h4>Задача:</h4><p>Компания столкнулась с проблемами ручной обработки логистических заявок: постоянные ошибки в документах, потеря заказов и, как следствие, финансовые убытки.</p><h4>Решение:</h4><p>Мы разработали централизованную систему, которая подключается к различным источникам заказов по API, автоматически распределяет их и генерирует всю необходимую документацию.</p><h4>Итог:</h4><p>Скорость обработки заказов выросла в 3 раза, а финансовые потери из-за человеческого фактора были полностью исключены.</p>">
+                                    <div class="project-card">
+                                        <div class="project-card-image"><img src="4.png" alt="Автоматизация логистики" loading="lazy"></div>
+                                        <div class="project-card-content">
+                                            <h3 class="project-card-title">Автоматизация логистики</h3>
+                                            <p class="project-card-summary">Единая система автоматически обрабатывает заказы и генерирует документы.</p>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <!-- Карточка 6 -->
+
+                                <!-- Карточка 7 -->
+                                <a href="#" class="project-card-link"
+                                   data-images="projects\web1_1.png, projects\web1_2.png, projects\web1_3.png"
+                                   data-tags="Pandas,SQL,Plotly"
+                                   data-full-description="<h4>Задача:</h4><p>Руководство получало десятки разрозненных Excel-отчетов с опозданием.</p><h4>Решение:</h4><p>Разработали дашборд, который в реальном времени собирает данные о продажах и рентабельности.</p>">
+                                    <div class="project-card">
+                                        <div class="project-card-image"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop" alt="Проект 3" loading="lazy"></div>
+                                        <div class="project-card-content">
+                                            <h3 class="project-card-title">Аналитический дашборд</h3>
+                                            <p class="project-card-summary">Дашборд в реальном времени собирает данные о продажах и рентабельности.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="slider-controls">
                         <button class="slider-arrow prev">&lt;</button>
@@ -202,7 +238,6 @@
         <!-- ====================================================== -->
         <!-- ============== КОНЕЦ ОБНОВЛЕННОЙ СЕКЦИИ КЕЙСОВ ============== -->
         <!-- ====================================================== -->
-
         <section id="contact" class="section">
             <div class="container">
                  <div class="section-header reveal" style="text-align: center; margin: 0 auto 60px auto;">
@@ -278,3 +313,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+[file content end]

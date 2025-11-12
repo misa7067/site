@@ -1,3 +1,5 @@
+[file name]: script.js
+[file content begin]
 document.addEventListener("DOMContentLoaded", function() {
     // ======================================================
     // ==== СКРИПТ АНИМАЦИИ ПОЯВЛЕНИЯ ЭЛЕМЕНТОВ ПРИ СКРОЛЛЕ ====
@@ -36,32 +38,27 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const patternSize = 45;
-            const speed = 0.1; // Скорость движения
+            const speed = 0.1;
 
-            // Увеличиваем время для бесконечной анимации
             time += speed;
 
             for (let x = patternSize; x < canvas.width; x += patternSize) {
                 for (let y = patternSize; y < canvas.height; y += patternSize) {
                     const opacity = 0.1 + Math.sin(time * 0.8 + x * 0.01 + y * 0.01) * 0.08;
 
-                    // Перекрестие
                     ctx.strokeStyle = `rgba(150, 150, 170, ${opacity})`;
                     ctx.lineWidth = 1.2;
 
-                    // Вертикальная линия
                     ctx.beginPath();
                     ctx.moveTo(x, y - patternSize/2.5);
                     ctx.lineTo(x, y + patternSize/2.5);
                     ctx.stroke();
 
-                    // Горизонтальная линия
                     ctx.beginPath();
                     ctx.moveTo(x - patternSize/2.5, y);
                     ctx.lineTo(x + patternSize/2.5, y);
                     ctx.stroke();
 
-                    // Угловые точки
                     ctx.fillStyle = `rgba(180, 180, 200, ${opacity})`;
                     ctx.beginPath();
                     ctx.arc(x, y, 1.5, 0, Math.PI * 2);
@@ -77,10 +74,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+        animate();
 
-        animate(); // Запускаем анимацию
-
-        // Останавливаем анимацию при скрытии страницы для оптимизации
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 stopAnimation();
@@ -93,10 +88,9 @@ document.addEventListener("DOMContentLoaded", function() {
     initStaticPattern();
 
     // ======================================================
-    // ==== НОВЫЙ СКРИПТ: ЛОГИКА ДЛЯ СЕКЦИИ КЕЙСОВ И МОДАЛЬНОГО ОКНА ====
+    // ==== ЛОГИКА ДЛЯ СЕКЦИИ КЕЙСОВ И МОДАЛЬНОГО ОКНА ====
     // ======================================================
 
-    const track = document.querySelector('.projects-slider-track');
     const modalOverlay = document.getElementById('project-modal-overlay');
     const modal = document.getElementById('project-modal');
 
@@ -262,46 +256,91 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // --- Логика основного слайдера для навигации ---
-    if (track) {
-        const slides = Array.from(track.children);
+    // --- ПРОСТАЯ ЛОГИКА СЛАЙДЕРА ПРОЕКТОВ ---
+    function initProjectsSlider() {
+        const track = document.querySelector('.projects-slider-track');
+        if (!track) return;
+
+        const slides = Array.from(track.querySelectorAll('.project-slide'));
         const nextButton = document.querySelector('#projects .slider-arrow.next');
         const prevButton = document.querySelector('#projects .slider-arrow.prev');
+
+        if (slides.length === 0) return;
+
         let currentIndex = 0;
-        let slideWidth = 0;
 
-        function updateSlideWidth() {
-            if (slides.length > 0) {
-                slideWidth = slides[0].getBoundingClientRect().width;
+        function updateSlider() {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.style.display = 'none';
+            });
+
+            if (slides[currentIndex]) {
+                slides[currentIndex].classList.add('active');
+                slides[currentIndex].style.display = 'block';
+            }
+
+            updateButtons();
+        }
+
+        function updateButtons() {
+            if (prevButton) {
+                prevButton.style.opacity = currentIndex === 0 ? '0.3' : '1';
+                prevButton.style.pointerEvents = currentIndex === 0 ? 'none' : 'all';
+            }
+            if (nextButton) {
+                nextButton.style.opacity = currentIndex === slides.length - 1 ? '0.3' : '1';
+                nextButton.style.pointerEvents = currentIndex === slides.length - 1 ? 'none' : 'all';
             }
         }
 
-        const moveToSlide = (i) => {
-            if (slides.length > 0) {
-                track.style.transform = `translateX(-${slideWidth * i}px)`;
-                currentIndex = i;
+        function moveToSlide(index) {
+            if (index >= 0 && index < slides.length) {
+                currentIndex = index;
+                updateSlider();
             }
-        };
+        }
 
-        if (nextButton && prevButton) {
+        updateSlider();
+
+        if (nextButton) {
             nextButton.addEventListener('click', () => {
-                if (slides.length > 1) {
-                    moveToSlide((currentIndex + 1) % slides.length);
-                }
-            });
-            prevButton.addEventListener('click', () => {
-                if (slides.length > 1) {
-                    moveToSlide((currentIndex - 1 + slides.length) % slides.length);
+                if (currentIndex < slides.length - 1) {
+                    moveToSlide(currentIndex + 1);
                 }
             });
         }
 
-        window.addEventListener('resize', () => {
-            updateSlideWidth();
-            moveToSlide(currentIndex);
-        });
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    moveToSlide(currentIndex - 1);
+                }
+            });
+        }
 
-        // Инициализация ширины слайда при загрузке
-        updateSlideWidth();
+        window.addEventListener('resize', updateSlider);
     }
+
+    // Запускаем слайдер
+    initProjectsSlider();
+
+    // ======================================================
+    // ==== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ====
+    // ======================================================
+
+    // Плавная прокрутка для навигационных ссылок
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
 });
+[file content end]
