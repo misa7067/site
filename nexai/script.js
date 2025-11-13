@@ -86,15 +86,17 @@ document.addEventListener("DOMContentLoaded", function() {
     initStaticPattern();
 
     // ======================================================
-    // ==== ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ПРОЕКТОВ ====
+    // ==== СЛАЙДЕР И МОДАЛЬНОЕ ОКНО ====
     // ======================================================
+
+    // ==== ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ПРОЕКТОВ ====
     function initProjectsSlider() {
         const track = document.querySelector('.projects-slider-track');
         if (!track) return;
 
         const slides = Array.from(track.querySelectorAll('.project-slide'));
-        const nextButton = document.querySelector('#projects .slider-arrow.next');
-        const prevButton = document.querySelector('#projects .slider-arrow.prev');
+        const nextButton = document.querySelector('.slider-arrow.next');
+        const prevButton = document.querySelector('.slider-arrow.prev');
 
         if (slides.length === 0) return;
 
@@ -103,7 +105,6 @@ document.addEventListener("DOMContentLoaded", function() {
         function updateSlider() {
             const translateX = -currentIndex * 100;
             track.style.transform = `translateX(${translateX}%)`;
-
             updateButtons();
         }
 
@@ -143,190 +144,139 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
 
-        // Добавляем обработчики для свайпа на мобильных устройствах
-        let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
-
+        let startX = 0, currentX = 0, isDragging = false;
         track.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
-            currentX = startX;
             isDragging = true;
             track.style.transition = 'none';
         });
-
         track.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             currentX = e.touches[0].clientX;
             const diff = currentX - startX;
-            const translateX = -currentIndex * 100 + (diff / track.offsetWidth) * 100;
-            track.style.transform = `translateX(${translateX}%)`;
+            track.style.transform = `translateX(${-currentIndex * 100 + (diff / track.offsetWidth) * 100}%)`;
         });
-
         track.addEventListener('touchend', () => {
             if (!isDragging) return;
             isDragging = false;
             track.style.transition = 'transform 0.3s ease';
-
             const diff = currentX - startX;
-            const threshold = 50;
-
-            if (diff > threshold && currentIndex > 0) {
+            if (diff > 50 && currentIndex > 0) {
                 moveToSlide(currentIndex - 1);
-            } else if (diff < -threshold && currentIndex < slides.length - 1) {
+            } else if (diff < -50 && currentIndex < slides.length - 1) {
                 moveToSlide(currentIndex + 1);
             } else {
                 updateSlider();
             }
         });
-
         window.addEventListener('resize', updateSlider);
     }
-
-    // Запускаем слайдер
     initProjectsSlider();
 
-    // ======================================================
     // ==== ЛОГИКА ДЛЯ МОДАЛЬНОГО ОКНА ====
-    // ======================================================
-
     const modalOverlay = document.getElementById('project-modal-overlay');
     const modal = document.getElementById('project-modal');
 
-    // --- Логика модального окна ---
     if (modalOverlay && modal) {
         const closeModalBtn = modal.querySelector('.modal-close-btn');
         const modalTitle = modal.querySelector('.modal-title');
         const modalTags = modal.querySelector('.modal-tags');
         const modalDescription = modal.querySelector('.modal-description');
-        const galleryPrevBtn = modal.querySelector('.modal-gallery-arrow.prev');
-        const galleryNextBtn = modal.querySelector('.modal-gallery-arrow.next');
-        const galleryCounter = modal.querySelector('.modal-gallery-counter');
-        const splitLayout = modal.querySelector('.split-layout');
+        const gridGallery = document.querySelector('.grid-gallery');
+        const prevBtn = document.querySelector('.gallery-arrow.prev');
+        const nextBtn = document.querySelector('.gallery-arrow.next');
+        const counter = document.querySelector('.gallery-counter');
         const projectLinks = document.querySelectorAll('.project-card-link');
 
         let currentImages = [];
-        let currentImageIndex = 0;
+        let currentPage = 0;
 
-        function showImage(index) {
-            const images = currentImages;
-            const totalSplitSlides = Math.floor(images.length / 3);
-            const remainingSinglePhotos = images.length % 3;
+        function updateGallery() {
+            gridGallery.innerHTML = '';
+            const startIndex = currentPage * 3;
+            const pageImages = currentImages.slice(startIndex, startIndex + 3);
 
-            if (index < totalSplitSlides) {
-                splitLayout.style.display = 'flex';
-                hideRegularImage();
-                const startIndex = index * 3;
-                const leftTopImg = document.querySelector('.left-side .top-half .split-image');
-                const leftBottomImg = document.querySelector('.left-side .bottom-half .split-image');
-                const rightFullImg = document.querySelector('.right-side .full-image');
-
-                if (leftTopImg && leftBottomImg && rightFullImg) {
-                    leftTopImg.src = images[startIndex];
-                    leftBottomImg.src = images[startIndex + 1];
-                    rightFullImg.src = images[startIndex + 2];
+            if (pageImages.length >= 3) {
+                if (pageImages[0]) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item large';
+                    item.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + 1}</div>`;
+                    gridGallery.appendChild(item);
+                }
+                if (pageImages[1]) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item small';
+                    item.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + 2}</div>`;
+                    gridGallery.appendChild(item);
+                }
+                if (pageImages[2]) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item small';
+                    item.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + 3}</div>`;
+                    gridGallery.appendChild(item);
                 }
             } else {
-                splitLayout.style.display = 'none';
-                const singlePhotoIndex = totalSplitSlides * 3 + (index - totalSplitSlides);
-                showRegularImage(images[singlePhotoIndex]);
-            }
-            updateCounterAndArrows(index, images.length);
-        }
-
-        function hideRegularImage() {
-            const regularImage = document.querySelector('.modal-image.regular');
-            if (regularImage) regularImage.style.display = 'none';
-        }
-
-        function showRegularImage(src) {
-            let regularImage = document.querySelector('.modal-image.regular');
-            if (!regularImage) {
-                regularImage = document.createElement('img');
-                regularImage.className = 'modal-image regular';
-                regularImage.alt = 'Изображение проекта';
-                Object.assign(regularImage.style, {
-                    width: '100%',
-                    aspectRatio: '16/9',
-                    objectFit: 'contain',
-                    borderRadius: '8px'
+                pageImages.forEach((image, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item';
+                    item.innerHTML = `<img src="${image}" alt="Скриншот ${startIndex + index + 1}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + index + 1}</div>`;
+                    gridGallery.appendChild(item);
                 });
-                document.querySelector('.modal-gallery-wrapper').insertBefore(regularImage, galleryPrevBtn);
             }
-            regularImage.style.display = 'block';
-            regularImage.src = src || '';
+
+            const totalPages = Math.ceil(currentImages.length / 3);
+            counter.textContent = `${currentPage + 1} / ${totalPages}`;
+            prevBtn.style.opacity = currentPage === 0 ? '0.3' : '1';
+            prevBtn.style.pointerEvents = currentPage === 0 ? 'none' : 'all';
+            nextBtn.style.opacity = currentPage === totalPages - 1 ? '0.3' : '1';
+            nextBtn.style.pointerEvents = currentPage === totalPages - 1 ? 'none' : 'all';
+
+            const showControls = totalPages > 1;
+            prevBtn.style.display = showControls ? 'flex' : 'none';
+            nextBtn.style.display = showControls ? 'flex' : 'none';
+            counter.style.display = showControls ? 'block' : 'none';
         }
 
-        function updateCounterAndArrows(index, totalImages) {
-            const totalSplitSlides = Math.floor(totalImages / 3);
-            const remainingSinglePhotos = totalImages % 3;
-            const totalSlides = totalSplitSlides + remainingSinglePhotos;
-
-            galleryCounter.textContent = `${index + 1} / ${totalSlides}`;
-            galleryPrevBtn.classList.toggle('visible', index > 0);
-            galleryNextBtn.classList.toggle('visible', index < totalSlides - 1);
+        function nextPage() {
+            if (currentPage < Math.ceil(currentImages.length / 3) - 1) {
+                currentPage++;
+                updateGallery();
+            }
         }
 
-        galleryNextBtn.addEventListener('click', () => {
-            const totalSplitSlides = Math.floor(currentImages.length / 3);
-            const remainingSinglePhotos = currentImages.length % 3;
-            const totalSlides = totalSplitSlides + remainingSinglePhotos;
-            if (currentImageIndex < totalSlides - 1) {
-                currentImageIndex++;
-                showImage(currentImageIndex);
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updateGallery();
             }
-        });
+        }
 
-        galleryPrevBtn.addEventListener('click', () => {
-            if (currentImageIndex > 0) {
-                currentImageIndex--;
-                showImage(currentImageIndex);
+        prevBtn.addEventListener('click', prevPage);
+        nextBtn.addEventListener('click', nextPage);
+
+        let touchStartX = 0;
+        gridGallery.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+        gridGallery.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextPage();
+                else prevPage();
             }
         });
 
         const openModal = (cardLink) => {
             const title = cardLink.querySelector('.project-card-title').textContent;
-            const tagsString = cardLink.dataset.tags || '';
-            const fullDescription = cardLink.dataset.fullDescription || '<p>Описание не найдено.</p>';
-            const imagesString = cardLink.dataset.images || '';
+            const tags = cardLink.dataset.tags || '';
+            const description = cardLink.dataset.fullDescription || '<p>Описание не найдено.</p>';
+            const images = cardLink.dataset.images || '';
 
-            currentImages = imagesString.split(',').map(url => url.trim()).filter(url => url);
-            currentImageIndex = 0;
-
-            const oldRegularImage = document.querySelector('.modal-image.regular');
-            if (oldRegularImage) oldRegularImage.remove();
+            currentImages = images.split(',').map(url => url.trim()).filter(Boolean);
+            currentPage = 0;
+            updateGallery();
 
             modalTitle.textContent = title;
-            modalDescription.innerHTML = fullDescription;
-
-            modalTags.innerHTML = '';
-            tagsString.split(',').forEach(tagText => {
-                if (tagText) {
-                    const tagElement = document.createElement('span');
-                    tagElement.textContent = tagText.trim();
-                    modalTags.appendChild(tagElement);
-                }
-            });
-
-            const totalSplitSlides = Math.floor(currentImages.length / 3);
-            const remainingSinglePhotos = currentImages.length % 3;
-            const totalSlides = totalSplitSlides + remainingSinglePhotos;
-
-            if (totalSlides > 1) {
-                galleryCounter.classList.add('visible');
-                showImage(currentImageIndex);
-            } else if (currentImages.length > 0) {
-                showImage(currentImageIndex);
-                galleryPrevBtn.classList.remove('visible');
-                galleryNextBtn.classList.remove('visible');
-                galleryCounter.classList.remove('visible');
-            } else {
-                splitLayout.style.display = 'none';
-                hideRegularImage();
-                galleryPrevBtn.classList.remove('visible');
-                galleryNextBtn.classList.remove('visible');
-                galleryCounter.classList.remove('visible');
-            }
+            modalDescription.innerHTML = description;
+            modalTags.innerHTML = tags.split(',').map(tag => tag.trim() ? `<span>${tag.trim()}</span>` : '').join('');
 
             document.body.classList.add('modal-open');
             modalOverlay.classList.add('active');
@@ -340,73 +290,59 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         projectLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+            link.addEventListener('click', e => {
                 e.preventDefault();
                 openModal(link);
             });
         });
 
         closeModalBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
-        });
+        modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
     }
-    // ======================================================
-    // ==== ПОЛНОЭКРАННЫЙ РЕЖИМ ДЛЯ ИЗОБРАЖЕНИЙ ====
-    // ======================================================
 
+    // ======================================================
+    // ==== ПОЛНОЭКРАННЫЙ РЕЖИМ ДЛЯ ИЗОБРАЖЕНИЙ (ВОЗВРАЩЕН) ====
+    // ======================================================
     const fullscreenOverlay = document.getElementById('fullscreen-overlay');
-    const fullscreenImage = document.querySelector('.fullscreen-image');
-    const fullscreenCloseBtn = document.querySelector('.fullscreen-close-btn');
+    if (fullscreenOverlay) {
+        const fullscreenImage = fullscreenOverlay.querySelector('.fullscreen-image');
+        const fullscreenCloseBtn = fullscreenOverlay.querySelector('.fullscreen-close-btn');
+        const gridGallery = document.querySelector('.grid-gallery');
 
-    if (fullscreenOverlay && fullscreenImage) {
         function openFullscreen(imageSrc) {
             fullscreenImage.src = imageSrc;
             fullscreenOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeFullscreen() {
             fullscreenOverlay.classList.remove('active');
-            document.body.style.overflow = '';
         }
 
-        // Обработчики кликов на изображения в модалке
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal-image') &&
-                modalOverlay && modalOverlay.classList.contains('active')) {
-                openFullscreen(e.target.src);
-            }
-        });
+        // Открытие по клику на картинку в галерее
+        if(gridGallery) {
+            gridGallery.addEventListener('click', function(e) {
+                if (e.target.tagName === 'IMG') {
+                    openFullscreen(e.target.src);
+                }
+            });
+        }
 
-        // Обработчики закрытия
+        // Закрытие
         fullscreenCloseBtn.addEventListener('click', closeFullscreen);
-        fullscreenOverlay.addEventListener('click', function(e) {
-            if (e.target === fullscreenOverlay) closeFullscreen();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) {
-                closeFullscreen();
-            }
-        });
+        fullscreenOverlay.addEventListener('click', e => { if (e.target === fullscreenOverlay) closeFullscreen(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) closeFullscreen(); });
     }
+
     // ======================================================
     // ==== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ====
     // ======================================================
-
-    // Плавная прокрутка для навигационных ссылок
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });

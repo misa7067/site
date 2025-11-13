@@ -401,41 +401,42 @@ main {
 }
 
 /* ====================================================== */
-/* ============== ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ПРОЕКТОВ ============== */
+/* ============== СЛАЙДЕР И МОДАЛЬНОЕ ОКНО ============== */
 /* ====================================================== */
 
+/* Стили слайдера проектов */
 body.modal-open { overflow: hidden; }
 
-#projects .project-card-link {
+.project-card-link {
     text-decoration: none;
     color: inherit;
     display: block;
     height: 100%;
 }
 
-#projects .projects-slider-wrapper {
+.projects-slider-wrapper {
     position: relative;
     overflow: hidden;
     padding: 0 60px;
 }
 
-#projects .projects-slider-track {
+.projects-slider-track {
     display: flex;
     transition: transform 0.3s ease;
     width: 100%;
 }
 
-#projects .project-slide {
+.project-slide {
     display: flex;
     gap: 25px;
     min-width: 100%;
     flex-shrink: 0;
     justify-content: flex-start;
     padding: 10px 0;
-    padding-left: 25px; /* ДОБАВЛЯЕМ ОТСТУП МЕЖДУ СЛАЙДАМИ */
+    padding-left: 25px;
 }
 
-#projects .project-card {
+.project-card {
     display: flex;
     flex-direction: column;
     background-color: #0A0A0A;
@@ -449,26 +450,26 @@ body.modal-open { overflow: hidden; }
     flex-shrink: 0;
 }
 
-#projects .project-card-link:hover .project-card {
+.project-card-link:hover .project-card {
     transform: translateY(-5px);
     border-color: var(--accent);
 }
 
-#projects .project-card-image {
+.project-card-image {
     height: 180px;
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
 }
 
-#projects .project-card-image img {
+.project-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
 
-#projects .project-card-content {
+.project-card-content {
     padding: 20px;
     height: 200px;
     display: flex;
@@ -476,7 +477,7 @@ body.modal-open { overflow: hidden; }
     flex-shrink: 0;
 }
 
-#projects .project-card-title {
+.project-card-title {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 12px;
@@ -489,7 +490,7 @@ body.modal-open { overflow: hidden; }
     flex-shrink: 0;
 }
 
-#projects .project-card-summary {
+.project-card-summary {
     color: var(--text-secondary);
     line-height: 1.5;
     font-size: 0.9rem;
@@ -501,8 +502,8 @@ body.modal-open { overflow: hidden; }
     min-height: 4.5em;
 }
 
-/* УПРАВЛЕНИЕ СЛАЙДЕРОМ */
-#projects .slider-controls {
+/* Управление слайдером */
+.slider-controls {
     position: absolute;
     top: 50%;
     left: 0;
@@ -514,7 +515,7 @@ body.modal-open { overflow: hidden; }
     z-index: 5;
 }
 
-#projects .slider-arrow {
+.slider-arrow {
     pointer-events: all;
     background-color: rgba(10, 10, 10, 0.8);
     border: 1px solid var(--border);
@@ -531,219 +532,249 @@ body.modal-open { overflow: hidden; }
     justify-content: center;
 }
 
-#projects .slider-arrow:hover {
+.slider-arrow:hover {
     background-color: var(--accent);
 }
 
-/* АДАПТИВНОСТЬ СЛАЙДЕРА */
-@media (max-width: 1100px) {
-    #projects .project-card {
-        width: 250px;
-        height: 380px;
-    }
-
-    #projects .project-card-image {
-        height: 180px;
-    }
-
-    #projects .project-card-content {
-        height: 200px;
-    }
-}
-
-@media (max-width: 768px) {
-    #projects .projects-slider-wrapper {
-        padding: 0 40px;
-    }
-
-    #projects .project-card {
-        width: 220px;
-        height: 350px;
-    }
-
-    #projects .project-card-image {
-        height: 150px;
-    }
-
-    #projects .project-card-content {
-        height: 200px;
-        padding: 15px;
-    }
-
-    #projects .slider-arrow {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    #projects .projects-slider-wrapper {
-        padding: 0 20px;
-    }
-
-    #projects .project-card {
-        width: 200px;
-        height: 320px;
-    }
-    
-    #projects .project-card-image {
-        height: 120px;
-    }
-    
-    #projects .project-card-content {
-        height: 200px;
-    }
-    
-    #projects .project-card-title {
-        font-size: 1.1rem;
-        height: 2.4em;
-    }
-    
-    #projects .project-card-summary {
-        font-size: 0.85rem;
-        min-height: 4em;
-    }
-}
-
-/* ====================================================== */
-/* ============== СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА ============== */
-/* ====================================================== */
-
+/* Модальное окно */
 #project-modal-overlay {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
-    z-index: 1000; opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-#project-modal-overlay.active { opacity: 1; pointer-events: all; }
-
-#project-modal {
-    position: fixed; top: 50%; left: 50%;
-    transform: translate(-50%, -50%) scale(0.95);
-    width: 95%;
-    max-width: 950px;
-    max-height: 95vh;
-    background-color: #0A0A0A; border: 1px solid var(--border);
-    border-radius: 12px; z-index: 1001; overflow-y: auto;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-#project-modal.active {
-    opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: all;
-}
-
-.modal-close-btn {
-    position: absolute; top: 15px; right: 15px;
-    background: none; border: none; color: var(--text-secondary);
-    font-size: 2rem; line-height: 1; cursor: pointer; transition: color 0.2s; z-index: 10;
-}
-.modal-close-btn:hover { color: var(--text-primary); }
-
-.modal-gallery-wrapper { position: relative; margin-bottom: 30px; }
-.split-layout {
-    display: flex;
-    gap: 10px;
-    height: 60vh;
-    min-height: 400px;
-    max-height: 600px;
-}
-.left-side {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.right-side {
-    flex: 1;
-    display: flex;
-}
-.top-half, .bottom-half {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-}
-
-.split-image, .full-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 8px;
-}
-
-.left-side .top-half,
-.left-side .bottom-half,
-.right-side {
-    position: relative;
-}
-
-.left-side .top-half img,
-.left-side .bottom-half img,
-.right-side img {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#project-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#project-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 95%;
+    max-width: 1200px;
+    max-height: 92vh;
+    background-color: #0A0A0A;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    z-index: 1001;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#project-modal.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: all;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 10;
+}
+
+.modal-close-btn:hover {
+    color: var(--text-primary);
+}
+
+.modal-gallery-wrapper {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* Сетка 2x2 для галереи */
+.grid-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 320px 180px;
+    gap: 15px;
+    height: 515px;
+}
+
+.grid-item {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    border: 1px solid #2a2a2a;
+}
+
+.grid-item.large {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
+.grid-item.small { }
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+    cursor: zoom-in; /* Добавляем курсор для изображений */
 }
 
-.modal-gallery-arrow {
-    position: absolute; top: 50%;
+.grid-item:hover img {
+    transform: scale(1.05);
+}
+
+.grid-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 12px;
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+}
+
+/* Управление листанием фото в модалке */
+.gallery-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff; width: 40px; height: 40px; border-radius: 50%;
-    font-size: 1.2rem; cursor: pointer; transition: all 0.2s;
-    display: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+    z-index: 5;
 }
-.modal-gallery-arrow:hover { background-color: rgba(0, 0, 0, 0.7); }
-.modal-gallery-arrow.prev { left: 15px; }
-.modal-gallery-arrow.next { right: 15px; }
-.modal-gallery-arrow.visible { display: block; }
 
-.modal-gallery-counter {
-    position: absolute; bottom: 15px; right: 15px;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 4px 10px; border-radius: 4px;
+.gallery-arrow {
+    pointer-events: all;
+    background-color: rgba(10, 10, 10, 0.8);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-gallery-wrapper:hover .gallery-arrow {
+    opacity: 1;
+}
+
+.gallery-arrow:hover {
+    background-color: var(--accent);
+}
+
+.gallery-counter {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    z-index: 5;
+}
+
+.modal-content-wrapper {
+    padding: 35px;
+}
+
+.modal-title {
+    font-size: 2.1rem;
+    margin-bottom: 15px;
+    color: var(--accent);
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    display: none;
 }
-.modal-gallery-counter.visible { display: block; }
 
-.modal-content-wrapper { padding: 40px; }
-.modal-title { font-size: 2.2rem; margin-bottom: 15px; color: var(--accent); font-family: 'IBM Plex Mono', monospace; }
-.modal-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
-.modal-tags span {
-    font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
-    background-color: rgba(48, 138, 191, 0.1); color: var(--accent);
-    padding: 5px 12px; border-radius: 4px;
+.modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
 }
-.modal-description p { color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem; }
-.modal-description h4 { color: var(--text-primary); margin-top: 25px; margin-bottom: 10px; font-size: 1.2rem; }
+
+.modal-tags span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    background-color: rgba(48, 138, 191, 0.1);
+    color: var(--accent);
+    padding: 5px 12px;
+    border-radius: 4px;
+}
+
+.modal-description p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+.modal-description h4 {
+    color: var(--text-primary);
+    margin-top: 22px;
+    margin-bottom: 10px;
+    font-size: 1.15rem;
+}
+
+/* Адаптивность */
+@media (max-width: 1100px) {
+    .project-card { width: 250px; height: 380px; }
+    .project-card-image { height: 180px; }
+    .project-card-content { height: 200px; }
+    .grid-gallery { grid-template-rows: 280px 160px; height: 455px; }
+}
 
 @media (max-width: 768px) {
+    .projects-slider-wrapper { padding: 0 40px; }
+    .project-card { width: 220px; height: 350px; }
+    .project-card-image { height: 150px; }
+    .project-card-content { height: 200px; padding: 15px; }
+    .slider-arrow { width: 40px; height: 40px; font-size: 1.2rem; }
     .modal-content-wrapper { padding: 25px; }
     .modal-title { font-size: 1.8rem; }
-    .split-layout {
-        flex-direction: column;
-        height: auto;
-        min-height: 300px;
-    }
-    .left-side {
-        flex-direction: row;
-        height: 200px;
-    }
-    .right-side {
-        height: 200px;
-    }
-    .top-half, .bottom-half {
-        height: 100%;
-    }
+    .grid-gallery { grid-template-columns: 1fr; grid-template-rows: 200px 120px 120px; height: auto; gap: 12px; }
+    .grid-item.large { grid-column: 1; }
+    .gallery-arrow { opacity: 1; width: 40px; height: 40px; font-size: 1.2rem; }
+}
+
+@media (max-width: 480px) {
+    .projects-slider-wrapper { padding: 0 20px; }
+    .project-card { width: 200px; height: 320px; }
+    .project-card-image { height: 120px; }
+    .project-card-content { height: 200px; }
+    .project-card-title { font-size: 1.1rem; height: 2.4em; }
+    .project-card-summary { font-size: 0.85rem; min-height: 4em; }
+    .grid-gallery { grid-template-rows: 180px 100px 100px; }
 }
 
 /* ====================================================== */
@@ -812,19 +843,11 @@ body.modal-open { overflow: hidden; }
 }
 
 @media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .copyright {
-        margin: 0 auto;
-    }
-
-    .footer-column {
-        margin-bottom: 30px;
-    }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .copyright { margin: 0 auto; }
+    .footer-column { margin-bottom: 30px; }
 }
+
 /* ====================================================== */
 /* ============== ПОЛНОЭКРАННЫЙ РЕЖИМ ============== */
 /* ====================================================== */

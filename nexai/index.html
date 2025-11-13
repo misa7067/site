@@ -121,11 +121,11 @@
         </section>
 
         <!-- ====================================================== -->
-        <!-- ============== ОБНОВЛЕННАЯ СЕКЦИЯ КЕЙСОВ ============== -->
+        <!-- ============== НАЧАЛО ОБНОВЛЕННОЙ СЕКЦИИ ============== -->
         <!-- ====================================================== -->
         <section id="projects" class="section">
             <div class="container">
-                <div class="section-header reveal">
+                <div class="section-header">
                     <h2>Как это работает на практике</h2>
                 </div>
                 <div class="projects-slider-wrapper">
@@ -148,7 +148,7 @@
 
                             <!-- Карточка 2 -->
                             <a href="#" class="project-card-link"
-                               data-images="projects\2\bot1.jpg, projects\2\bot2.jpg, projects\2\bot3.jpg"
+                               data-images="projects\2\bot3.jpg, projects\2\bot2.jpg, projects\2\bot1.jpg"
                                data-tags="Pandas,SQL,Plotly"
                                data-full-description="<h4>Задача:</h4><p>Руководство получало десятки разрозненных Excel-отчетов с опозданием.</p><h4>Решение:</h4><p>Разработали дашборд, который в реальном времени собирает данные о продажах и рентабельности.</p>">
                                 <div class="project-card">
@@ -192,7 +192,7 @@
                         <div class="project-slide">
                             <!-- Карточка 5 -->
                             <a href="#" class="project-card-link"
-                               data-images="projects\5\inter1.png, projects\5\inter2.png, projects\5\inter3.png, projects\5\inter4.png, projects\5\inter5.png, projects\5\inter6.png"
+                               data-images="projects\5\inter2.png, projects\5\inter3.png, projects\5\inter1.png, projects\5\inter4.png, projects\5\inter5.png, projects\5\inter6.png"
                                data-tags="Python,API,PostgreSQL"
                                data-full-description="<h4>Задача:</h4><p>Компания столкнулась с проблемами ручной обработки логистических заявок: постоянные ошибки в документах, потеря заказов и, как следствие, финансовые убытки.</p><h4>Решение:</h4><p>Мы разработали централизованную систему, которая подключается к различным источникам заказов по API, автоматически распределяет их и генерирует всю необходимую документацию.</p><h4>Итог:</h4><p>Скорость обработки заказов выросла в 3 раза, а финансовые потери из-за человеческого фактора были полностью исключены.</p>">
                                 <div class="project-card">
@@ -226,6 +226,9 @@
                 </div>
             </div>
         </section>
+        <!-- ====================================================== -->
+        <!-- ============== КОНЕЦ ОБНОВЛЕННОЙ СЕКЦИИ ============== -->
+        <!-- ====================================================== -->
 
         <section id="contact" class="section">
             <div class="container">
@@ -261,18 +264,17 @@
             <button class="modal-close-btn">&times;</button>
             <div class="modal-content-wrapper">
                 <div class="modal-gallery-wrapper">
-                    <div class="split-layout">
-                        <div class="left-side">
-                            <div class="top-half"><img src="" alt="Фото 1" class="modal-image split-image"></div>
-                            <div class="bottom-half"><img src="" alt="Фото 2" class="modal-image split-image"></div>
-                        </div>
-                        <div class="right-side">
-                            <img src="" alt="Фото 3" class="modal-image full-image">
-                        </div>
+                    <!-- Сетка 2x2 -->
+                    <div class="grid-gallery">
+                        <!-- Будет заполняться через JavaScript -->
                     </div>
-                    <button class="modal-gallery-arrow prev">&lt;</button>
-                    <button class="modal-gallery-arrow next">&gt;</button>
-                    <span class="modal-gallery-counter"></span>
+
+                    <!-- Управление листанием -->
+                    <div class="gallery-controls">
+                        <button class="gallery-arrow prev">&lt;</button>
+                        <button class="gallery-arrow next">&gt;</button>
+                    </div>
+                    <div class="gallery-counter">1 / 1</div>
                 </div>
                 <h3 class="modal-title"></h3>
                 <div class="modal-tags"></div>
@@ -280,11 +282,12 @@
             </div>
         </div>
     </div>
-        <!-- Добавляем после модального окна -->
+    <!-- Полноэкранный режим -->
     <div id="fullscreen-overlay">
         <button class="fullscreen-close-btn">&times;</button>
         <img src="" alt="Полноэкранное изображение" class="fullscreen-image">
     </div>
+
     <!-- Скрипт-загрузчик компонентов -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
