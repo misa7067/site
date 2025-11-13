@@ -1,5 +1,3 @@
-[file name]: script.js
-[file content begin]
 document.addEventListener("DOMContentLoaded", function() {
     // ======================================================
     // ==== СКРИПТ АНИМАЦИИ ПОЯВЛЕНИЯ ЭЛЕМЕНТОВ ПРИ СКРОЛЛЕ ====
@@ -88,7 +86,108 @@ document.addEventListener("DOMContentLoaded", function() {
     initStaticPattern();
 
     // ======================================================
-    // ==== ЛОГИКА ДЛЯ СЕКЦИИ КЕЙСОВ И МОДАЛЬНОГО ОКНА ====
+    // ==== ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ПРОЕКТОВ ====
+    // ======================================================
+    function initProjectsSlider() {
+        const track = document.querySelector('.projects-slider-track');
+        if (!track) return;
+
+        const slides = Array.from(track.querySelectorAll('.project-slide'));
+        const nextButton = document.querySelector('#projects .slider-arrow.next');
+        const prevButton = document.querySelector('#projects .slider-arrow.prev');
+
+        if (slides.length === 0) return;
+
+        let currentIndex = 0;
+
+        function updateSlider() {
+            const translateX = -currentIndex * 100;
+            track.style.transform = `translateX(${translateX}%)`;
+
+            updateButtons();
+        }
+
+        function updateButtons() {
+            if (prevButton) {
+                prevButton.style.opacity = currentIndex === 0 ? '0.3' : '1';
+                prevButton.style.pointerEvents = currentIndex === 0 ? 'none' : 'all';
+            }
+            if (nextButton) {
+                nextButton.style.opacity = currentIndex === slides.length - 1 ? '0.3' : '1';
+                nextButton.style.pointerEvents = currentIndex === slides.length - 1 ? 'none' : 'all';
+            }
+        }
+
+        function moveToSlide(index) {
+            if (index >= 0 && index < slides.length) {
+                currentIndex = index;
+                updateSlider();
+            }
+        }
+
+        updateSlider();
+
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                if (currentIndex < slides.length - 1) {
+                    moveToSlide(currentIndex + 1);
+                }
+            });
+        }
+
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    moveToSlide(currentIndex - 1);
+                }
+            });
+        }
+
+        // Добавляем обработчики для свайпа на мобильных устройствах
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            currentX = startX;
+            isDragging = true;
+            track.style.transition = 'none';
+        });
+
+        track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+            const diff = currentX - startX;
+            const translateX = -currentIndex * 100 + (diff / track.offsetWidth) * 100;
+            track.style.transform = `translateX(${translateX}%)`;
+        });
+
+        track.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            track.style.transition = 'transform 0.3s ease';
+
+            const diff = currentX - startX;
+            const threshold = 50;
+
+            if (diff > threshold && currentIndex > 0) {
+                moveToSlide(currentIndex - 1);
+            } else if (diff < -threshold && currentIndex < slides.length - 1) {
+                moveToSlide(currentIndex + 1);
+            } else {
+                updateSlider();
+            }
+        });
+
+        window.addEventListener('resize', updateSlider);
+    }
+
+    // Запускаем слайдер
+    initProjectsSlider();
+
+    // ======================================================
+    // ==== ЛОГИКА ДЛЯ МОДАЛЬНОГО ОКНА ====
     // ======================================================
 
     const modalOverlay = document.getElementById('project-modal-overlay');
@@ -255,76 +354,45 @@ document.addEventListener("DOMContentLoaded", function() {
             if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
         });
     }
+    // ======================================================
+    // ==== ПОЛНОЭКРАННЫЙ РЕЖИМ ДЛЯ ИЗОБРАЖЕНИЙ ====
+    // ======================================================
 
-    // --- ПРОСТАЯ ЛОГИКА СЛАЙДЕРА ПРОЕКТОВ ---
-    function initProjectsSlider() {
-        const track = document.querySelector('.projects-slider-track');
-        if (!track) return;
+    const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+    const fullscreenImage = document.querySelector('.fullscreen-image');
+    const fullscreenCloseBtn = document.querySelector('.fullscreen-close-btn');
 
-        const slides = Array.from(track.querySelectorAll('.project-slide'));
-        const nextButton = document.querySelector('#projects .slider-arrow.next');
-        const prevButton = document.querySelector('#projects .slider-arrow.prev');
+    if (fullscreenOverlay && fullscreenImage) {
+        function openFullscreen(imageSrc) {
+            fullscreenImage.src = imageSrc;
+            fullscreenOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-        if (slides.length === 0) return;
+        function closeFullscreen() {
+            fullscreenOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-        let currentIndex = 0;
-
-        function updateSlider() {
-            slides.forEach(slide => {
-                slide.classList.remove('active');
-                slide.style.display = 'none';
-            });
-
-            if (slides[currentIndex]) {
-                slides[currentIndex].classList.add('active');
-                slides[currentIndex].style.display = 'block';
+        // Обработчики кликов на изображения в модалке
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-image') &&
+                modalOverlay && modalOverlay.classList.contains('active')) {
+                openFullscreen(e.target.src);
             }
+        });
 
-            updateButtons();
-        }
-
-        function updateButtons() {
-            if (prevButton) {
-                prevButton.style.opacity = currentIndex === 0 ? '0.3' : '1';
-                prevButton.style.pointerEvents = currentIndex === 0 ? 'none' : 'all';
+        // Обработчики закрытия
+        fullscreenCloseBtn.addEventListener('click', closeFullscreen);
+        fullscreenOverlay.addEventListener('click', function(e) {
+            if (e.target === fullscreenOverlay) closeFullscreen();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) {
+                closeFullscreen();
             }
-            if (nextButton) {
-                nextButton.style.opacity = currentIndex === slides.length - 1 ? '0.3' : '1';
-                nextButton.style.pointerEvents = currentIndex === slides.length - 1 ? 'none' : 'all';
-            }
-        }
-
-        function moveToSlide(index) {
-            if (index >= 0 && index < slides.length) {
-                currentIndex = index;
-                updateSlider();
-            }
-        }
-
-        updateSlider();
-
-        if (nextButton) {
-            nextButton.addEventListener('click', () => {
-                if (currentIndex < slides.length - 1) {
-                    moveToSlide(currentIndex + 1);
-                }
-            });
-        }
-
-        if (prevButton) {
-            prevButton.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    moveToSlide(currentIndex - 1);
-                }
-            });
-        }
-
-        window.addEventListener('resize', updateSlider);
+        });
     }
-
-    // Запускаем слайдер
-    initProjectsSlider();
-
     // ======================================================
     // ==== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ====
     // ======================================================
@@ -343,4 +411,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
-[file content end]

@@ -1,5 +1,3 @@
-[file name]: style.css
-[file content begin]
 :root {
     --background: #000000;
     --text-primary: #EAEAEA;
@@ -403,7 +401,7 @@ main {
 }
 
 /* ====================================================== */
-/* ============== ИСПРАВЛЕННЫЙ СЛАЙДЕР ПРОЕКТОВ ============== */
+/* ============== ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ПРОЕКТОВ ============== */
 /* ====================================================== */
 
 body.modal-open { overflow: hidden; }
@@ -418,35 +416,23 @@ body.modal-open { overflow: hidden; }
 #projects .projects-slider-wrapper {
     position: relative;
     overflow: hidden;
-    padding: 0 40px;
+    padding: 0 60px;
 }
 
 #projects .projects-slider-track {
-    position: relative;
+    display: flex;
+    transition: transform 0.3s ease;
     width: 100%;
 }
 
 #projects .project-slide {
-    display: none;
-    width: 100%;
-}
-
-#projects .project-slide.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* ФИКСИРОВАННЫЕ РАЗМЕРЫ КАРТОЧЕК */
-#projects .project-card-container-in-slide {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
     gap: 25px;
-    align-items: start;
+    min-width: 100%;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    padding: 10px 0;
+    padding-left: 25px; /* ДОБАВЛЯЕМ ОТСТУП МЕЖДУ СЛАЙДАМИ */
 }
 
 #projects .project-card {
@@ -457,8 +443,10 @@ body.modal-open { overflow: hidden; }
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
-    height: 400px; /* ФИКСИРОВАННАЯ ВЫСОТА */
+    width: 240px;
+    height: 400px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 #projects .project-card-link:hover .project-card {
@@ -467,7 +455,7 @@ body.modal-open { overflow: hidden; }
 }
 
 #projects .project-card-image {
-    height: 200px; /* ФИКСИРОВАННАЯ ВЫСОТА */
+    height: 180px;
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
@@ -482,7 +470,7 @@ body.modal-open { overflow: hidden; }
 
 #projects .project-card-content {
     padding: 20px;
-    height: 200px; /* ФИКСИРОВАННАЯ ВЫСОТА */
+    height: 200px;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -493,7 +481,7 @@ body.modal-open { overflow: hidden; }
     font-weight: 600;
     margin-bottom: 12px;
     line-height: 1.3;
-    height: 2.6em; /* ФИКСИРОВАННАЯ ВЫСОТА ДЛЯ 2 СТРОК */
+    height: 2.6em;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -510,7 +498,7 @@ body.modal-open { overflow: hidden; }
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 4.5em; /* МИНИМАЛЬНАЯ ВЫСОТА ДЛЯ 3 СТРОК */
+    min-height: 4.5em;
 }
 
 /* УПРАВЛЕНИЕ СЛАЙДЕРОМ */
@@ -549,18 +537,15 @@ body.modal-open { overflow: hidden; }
 
 /* АДАПТИВНОСТЬ СЛАЙДЕРА */
 @media (max-width: 1100px) {
-    #projects .project-card-container-in-slide {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     #projects .project-card {
+        width: 250px;
         height: 380px;
     }
-    
+
     #projects .project-card-image {
         height: 180px;
     }
-    
+
     #projects .project-card-content {
         height: 200px;
     }
@@ -568,24 +553,18 @@ body.modal-open { overflow: hidden; }
 
 @media (max-width: 768px) {
     #projects .projects-slider-wrapper {
-        padding: 0 20px;
-    }
-
-    #projects .project-card-container-in-slide {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        padding: 0 40px;
     }
 
     #projects .project-card {
+        width: 220px;
         height: 350px;
-        max-width: 400px;
-        margin: 0 auto;
     }
-    
+
     #projects .project-card-image {
         height: 150px;
     }
-    
+
     #projects .project-card-content {
         height: 200px;
         padding: 15px;
@@ -600,10 +579,11 @@ body.modal-open { overflow: hidden; }
 
 @media (max-width: 480px) {
     #projects .projects-slider-wrapper {
-        padding: 0 10px;
+        padding: 0 20px;
     }
 
     #projects .project-card {
+        width: 200px;
         height: 320px;
     }
     
@@ -689,7 +669,7 @@ body.modal-open { overflow: hidden; }
 .split-image, .full-image {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
     display: block;
     border-radius: 8px;
 }
@@ -708,7 +688,7 @@ body.modal-open { overflow: hidden; }
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .modal-gallery-arrow {
@@ -845,4 +825,48 @@ body.modal-open { overflow: hidden; }
         margin-bottom: 30px;
     }
 }
-[file content end]
+/* ====================================================== */
+/* ============== ПОЛНОЭКРАННЫЙ РЕЖИМ ============== */
+/* ====================================================== */
+
+#fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.98);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#fullscreen-overlay.active {
+    display: flex;
+}
+
+.fullscreen-image {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.fullscreen-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 2001;
+    transition: color 0.2s;
+}
+
+.fullscreen-close-btn:hover {
+    color: var(--accent);
+}
