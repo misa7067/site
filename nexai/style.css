@@ -418,8 +418,69 @@ body.modal-open { overflow: hidden; }
     position: relative;
     overflow: hidden;
     padding: 0 60px;
+    -webkit-mask: linear-gradient(90deg,
+        transparent 0%,
+        black 60px,
+        black calc(100% - 60px),
+        transparent 100%);
+    mask: linear-gradient(90deg,
+        transparent 0%,
+        black 60px,
+        black calc(100% - 60px),
+        transparent 100%);
 }
 
+/* Обновляем стрелки чтобы были поверх маски */
+.slider-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .projects-slider-wrapper {
+        padding: 0 40px;
+        -webkit-mask: linear-gradient(90deg,
+            transparent 0%,
+            black 40px,
+            black calc(100% - 40px),
+            transparent 100%);
+        mask: linear-gradient(90deg,
+            transparent 0%,
+            black 40px,
+            black calc(100% - 40px),
+            transparent 100%);
+    }
+
+    .slider-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .projects-slider-wrapper {
+        padding: 0 20px;
+        -webkit-mask: linear-gradient(90deg,
+            transparent 0%,
+            black 20px,
+            black calc(100% - 20px),
+            transparent 100%);
+        mask: linear-gradient(90deg,
+            transparent 0%,
+            black 20px,
+            black calc(100% - 20px),
+            transparent 100%);
+    }
+}
 .projects-slider-track {
     display: flex;
     transition: transform 0.3s ease;
@@ -503,17 +564,6 @@ body.modal-open { overflow: hidden; }
 }
 
 /* Управление слайдером */
-.slider-controls {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-    z-index: 5;
-}
 
 .slider-arrow {
     pointer-events: all;
@@ -536,23 +586,30 @@ body.modal-open { overflow: hidden; }
     background-color: var(--accent);
 }
 
-/* Модальное окно */
+/* === НОВЫЙ КОД (ВСТАВИТЬ) === */
 #project-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
     z-index: 1000;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition:
+        opacity 0.4s ease,
+        background-color 0.4s ease,
+        backdrop-filter 0.4s ease;
 }
 
 #project-modal-overlay.active {
     opacity: 1;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     pointer-events: all;
 }
 
@@ -560,25 +617,30 @@ body.modal-open { overflow: hidden; }
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.95);
+    transform: translate(-50%, -50%) scale(0.8) rotateX(5deg);
     width: 95%;
     max-width: 1200px;
     max-height: 92vh;
     background-color: #0A0A0A;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 16px;
     z-index: 1001;
     overflow-y: auto;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition:
+        opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 #project-modal.active {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1) rotateX(0deg);
     pointer-events: all;
 }
+
 
 .modal-close-btn {
     position: absolute;
@@ -892,4 +954,217 @@ body.modal-open { overflow: hidden; }
 
 .fullscreen-close-btn:hover {
     color: var(--accent);
+}
+/* ====================================================== */
+/* ============== КАСТОМНЫЙ СКРОЛЛБАР ============== */
+/* ====================================================== */
+
+/* Для Webkit браузеров (Chrome, Safari, Edge) */
+#project-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+#project-modal::-webkit-scrollbar-track {
+    background: #0A0A0A;
+    border-radius: 4px;
+}
+
+#project-modal::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+    border: 2px solid #0A0A0A;
+}
+
+#project-modal::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Для Firefox */
+#project-modal {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) #0A0A0A;
+}
+
+/* Также можно стилизовать скроллбар для всего сайта */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Для Firefox всего сайта */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--background);
+}
+
+/* ====================================================== */
+/* ============== УЛУЧШЕННЫЕ АНИМАЦИИ МОДАЛКИ ============== */
+/* ====================================================== */
+
+/* Анимация для контента внутри модалки */
+.modal-content-wrapper {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.4s ease 0.2s,
+        transform 0.4s ease 0.2s;
+}
+
+#project-modal.active .modal-content-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимация для галереи */
+.grid-gallery {
+    opacity: 0;
+    transform: translateY(15px);
+    transition:
+        opacity 0.4s ease 0.1s,
+        transform 0.4s ease 0.1s;
+}
+
+#project-modal.active .grid-gallery {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимация для заголовка */
+.modal-title {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+        opacity 0.4s ease 0.3s,
+        transform 0.4s ease 0.3s;
+}
+
+#project-modal.active .modal-title {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Анимация для тегов */
+.modal-tags {
+    opacity: 0;
+    transform: translateX(10px);
+    transition:
+        opacity 0.4s ease 0.35s,
+        transform 0.4s ease 0.35s;
+}
+
+#project-modal.active .modal-tags {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Анимация для описания */
+.modal-description {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+        opacity 0.4s ease 0.4s,
+        transform 0.4s ease 0.4s;
+}
+
+#project-modal.active .modal-description {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимация для кнопки закрытия */
+.modal-close-btn {
+    opacity: 0;
+    transform: scale(0.8) rotate(90deg);
+    transition:
+        opacity 0.3s ease 0.1s,
+        transform 0.3s ease 0.1s,
+        color 0.2s ease;
+}
+
+#project-modal.active .modal-close-btn {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+/* Анимация для стрелок галереи */
+.gallery-arrow {
+    transition:
+        opacity 0.3s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+    transform: scale(0.8);
+}
+
+.modal-gallery-wrapper:hover .gallery-arrow {
+    transform: scale(1);
+}
+
+/* Плавная анимация для grid-item */
+.grid-item {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: translateY(-2px);
+}
+
+/* Анимация для счетчика */
+.gallery-counter {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+        opacity 0.3s ease 0.5s,
+        transform 0.3s ease 0.5s;
+}
+
+#project-modal.active .gallery-counter {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимация закрытия */
+#project-modal.closing {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9) rotateX(-5deg);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+#project-modal-overlay.closing {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    transition:
+        opacity 0.3s ease,
+        background-color 0.3s ease,
+        backdrop-filter 0.3s ease;
+}
+/* ====================================================== */
+/* ============== РАЗДЕЛИТЕЛЬ ПОД КАРТОЧКАМИ ============== */
+/* ====================================================== */
+
+#projects .container::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--border) 50%,
+        transparent 100%);
+    margin-top: 20px;
+    opacity: 0.8;
 }

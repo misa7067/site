@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const ctx = canvas.getContext('2d');
         let animationId;
-        let time = 0;
+        let startTime = Date.now();
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -32,17 +32,19 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         function animate() {
+            const currentTime = Date.now() - startTime;
+            // Нормализуем время в диапазон [0, 2*PI] для плавного повторения
+            const normalizedTime = (currentTime * 0.0025) % (Math.PI * 2);
+
             ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const patternSize = 45;
-            const speed = 0.1;
-
-            time += speed;
 
             for (let x = patternSize; x < canvas.width; x += patternSize) {
                 for (let y = patternSize; y < canvas.height; y += patternSize) {
-                    const opacity = 0.1 + Math.sin(time * 0.8 + x * 0.01 + y * 0.01) * 0.08;
+                    // Используем normalizedTime для плавного циклического изменения
+                    const opacity = 0.1 + Math.sin(normalizedTime + x * 0.01 + y * 0.01) * 0.08;
 
                     ctx.strokeStyle = `rgba(150, 150, 170, ${opacity})`;
                     ctx.lineWidth = 1.2;
@@ -78,6 +80,8 @@ document.addEventListener("DOMContentLoaded", function() {
             if (document.hidden) {
                 stopAnimation();
             } else {
+                // Перезапускаем с нового времени при возвращении на вкладку
+                startTime = Date.now() - (startTime % (Math.PI * 2 * 1000));
                 animate();
             }
         });
@@ -191,39 +195,42 @@ document.addEventListener("DOMContentLoaded", function() {
         let currentImages = [];
         let currentPage = 0;
 
-        function updateGallery() {
-            gridGallery.innerHTML = '';
-            const startIndex = currentPage * 3;
-            const pageImages = currentImages.slice(startIndex, startIndex + 3);
+    function updateGallery() {
+        gridGallery.innerHTML = '';
+        const startIndex = currentPage * 3;
+        const pageImages = currentImages.slice(startIndex, startIndex + 3);
 
-            if (pageImages.length >= 3) {
-                if (pageImages[0]) {
-                    const item = document.createElement('div');
-                    item.className = 'grid-item large';
-                    item.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + 1}</div>`;
-                    gridGallery.appendChild(item);
-                }
-                if (pageImages[1]) {
-                    const item = document.createElement('div');
-                    item.className = 'grid-item small';
-                    item.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + 2}</div>`;
-                    gridGallery.appendChild(item);
-                }
-                if (pageImages[2]) {
-                    const item = document.createElement('div');
-                    item.className = 'grid-item small';
-                    item.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + 3}</div>`;
-                    gridGallery.appendChild(item);
-                }
-            } else {
-                pageImages.forEach((image, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'grid-item';
-                    item.innerHTML = `<img src="${image}" alt="Скриншот ${startIndex + index + 1}" loading="lazy"><div class="grid-caption">Скриншот ${startIndex + index + 1}</div>`;
-                    gridGallery.appendChild(item);
-                });
+        if (pageImages.length >= 3) {
+            if (pageImages[0]) {
+                const item = document.createElement('div');
+                item.className = 'grid-item large';
+                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
+                item.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                gridGallery.appendChild(item);
             }
-
+            if (pageImages[1]) {
+                const item = document.createElement('div');
+                item.className = 'grid-item small';
+                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
+                item.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption"></div>`;
+                gridGallery.appendChild(item);
+            }
+            if (pageImages[2]) {
+                const item = document.createElement('div');
+                item.className = 'grid-item small';
+                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
+                item.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption"></div>`;
+                gridGallery.appendChild(item);
+            }
+        } else {
+            pageImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
+                item.innerHTML = `<img src="${image}" alt="Скриншот ${startIndex + index + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                gridGallery.appendChild(item);
+            });
+        }
             const totalPages = Math.ceil(currentImages.length / 3);
             counter.textContent = `${currentPage + 1} / ${totalPages}`;
             prevBtn.style.opacity = currentPage === 0 ? '0.3' : '1';
@@ -284,11 +291,15 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         const closeModal = () => {
-            document.body.classList.remove('modal-open');
-            modalOverlay.classList.remove('active');
-            modal.classList.remove('active');
-        };
+            modal.classList.add('closing');
+            modalOverlay.classList.add('closing');
 
+            setTimeout(() => {
+                document.body.classList.remove('modal-open');
+                modalOverlay.classList.remove('active', 'closing');
+                modal.classList.remove('active', 'closing');
+            }, 300);
+        };
         projectLinks.forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
