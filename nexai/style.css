@@ -1168,3 +1168,58 @@ html {
     margin-top: 20px;
     opacity: 0.8;
 }
+/* ====================================================== */
+/* ============== СПЕЦИАЛЬНЫЙ МАКЕТ ДЛЯ 4-ГО КЕЙСА ============== */
+/* ====================================================== */
+
+/* Специальный макет для 4-го кейса - 2 фото слева, 1 большое справа */
+.grid-gallery.special-layout {
+    grid-template-columns: 55% 45%; /* Уменьшили левую часть, увеличили правую */
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "left-top right"
+        "left-bottom right";
+    height: 515px;
+    gap: 15px;
+}
+
+/* Позиционирование элементов в специальном макете */
+.grid-item.special-left-top {
+    grid-area: left-top;
+}
+
+.grid-item.special-left-bottom {
+    grid-area: left-bottom;
+}
+
+.grid-item.special-right-large {
+    grid-area: right;
+}
+
+/* Уменьшаем отступ между левыми фотками */
+.grid-item.special-left-top {
+    margin-bottom: 8px;
+}
+
+.grid-item.special-left-bottom {
+    margin-top: 8px;
+}
+
+/* Адаптивность для специального макета */
+@media (max-width: 768px) {
+    .grid-gallery.special-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 200px 200px 300px;
+        grid-template-areas:
+            "left-top"
+            "left-bottom"
+            "right";
+        height: 720px;
+    }
+
+    /* На мобильных убираем дополнительные отступы */
+    .grid-item.special-left-top,
+    .grid-item.special-left-bottom {
+        margin: 0;
+    }
+}

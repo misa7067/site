@@ -195,42 +195,82 @@ document.addEventListener("DOMContentLoaded", function() {
         let currentImages = [];
         let currentPage = 0;
 
-    function updateGallery() {
-        gridGallery.innerHTML = '';
-        const startIndex = currentPage * 3;
-        const pageImages = currentImages.slice(startIndex, startIndex + 3);
+        function updateGallery() {
+            gridGallery.innerHTML = '';
+            const startIndex = currentPage * 3;
+            const pageImages = currentImages.slice(startIndex, startIndex + 3);
 
-        if (pageImages.length >= 3) {
-            if (pageImages[0]) {
-                const item = document.createElement('div');
-                item.className = 'grid-item large';
-                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
-                item.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption"></div>`;
-                gridGallery.appendChild(item);
+            // СБРАСЫВАЕМ СТИЛИ
+            gridGallery.className = 'grid-gallery';
+            gridGallery.removeAttribute('style');
+
+            // Проверяем, это 4-й кейс (по названию изображений)
+            const isFourthCase = currentImages.some(img =>
+                img.includes('hardy1.png') ||
+                img.includes('hardy2.jpg') ||
+                img.includes('hardy3.png')
+            );
+
+            if (isFourthCase && pageImages.length >= 3) {
+                // СПЕЦИАЛЬНЫЙ МАКЕТ ДЛЯ 4-Й КАРТОЧКИ
+                gridGallery.className = 'grid-gallery special-layout';
+
+                // Левая верхняя фотка
+                if (pageImages[0]) {
+                    const leftTop = document.createElement('div');
+                    leftTop.className = 'grid-item special-left-top';
+                    leftTop.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                    gridGallery.appendChild(leftTop);
+                }
+
+                // Левая нижняя фотка
+                if (pageImages[1]) {
+                    const leftBottom = document.createElement('div');
+                    leftBottom.className = 'grid-item special-left-bottom';
+                    leftBottom.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption"></div>`;
+                    gridGallery.appendChild(leftBottom);
+                }
+
+                // Правая большая фотка
+                if (pageImages[2]) {
+                    const rightLarge = document.createElement('div');
+                    rightLarge.className = 'grid-item special-right-large';
+                    rightLarge.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption"></div>`;
+                    gridGallery.appendChild(rightLarge);
+                }
+
+            } else if (pageImages.length >= 3) {
+                // СТАНДАРТНЫЙ МАКЕТ ДЛЯ ВСЕХ ОСТАЛЬНЫХ
+                gridGallery.className = 'grid-gallery standard-layout';
+
+                if (pageImages[0]) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item large';
+                    item.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                    gridGallery.appendChild(item);
+                }
+                if (pageImages[1]) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item small';
+                    item.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption"></div>`;
+                    gridGallery.appendChild(item);
+                }
+                if (pageImages[2]) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item small';
+                    item.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption"></div>`;
+                    gridGallery.appendChild(item);
+                }
+            } else {
+                // Меньше 3 изображений
+                pageImages.forEach((image, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item';
+                    item.style.height = '250px';
+                    item.innerHTML = `<img src="${image}" alt="Скриншот ${startIndex + index + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                    gridGallery.appendChild(item);
+                });
             }
-            if (pageImages[1]) {
-                const item = document.createElement('div');
-                item.className = 'grid-item small';
-                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
-                item.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption"></div>`;
-                gridGallery.appendChild(item);
-            }
-            if (pageImages[2]) {
-                const item = document.createElement('div');
-                item.className = 'grid-item small';
-                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
-                item.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption"></div>`;
-                gridGallery.appendChild(item);
-            }
-        } else {
-            pageImages.forEach((image, index) => {
-                const item = document.createElement('div');
-                item.className = 'grid-item';
-                // ОСТАВЛЕН grid-caption, но убран текст "Скриншот"
-                item.innerHTML = `<img src="${image}" alt="Скриншот ${startIndex + index + 1}" loading="lazy"><div class="grid-caption"></div>`;
-                gridGallery.appendChild(item);
-            });
-        }
             const totalPages = Math.ceil(currentImages.length / 3);
             counter.textContent = `${currentPage + 1} / ${totalPages}`;
             prevBtn.style.opacity = currentPage === 0 ? '0.3' : '1';
@@ -279,6 +319,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
             currentImages = images.split(',').map(url => url.trim()).filter(Boolean);
             currentPage = 0;
+
+            // СБРАСЫВАЕМ СТИЛИ ГАЛЕРЕИ ПЕРЕД ОБНОВЛЕНИЕМ
+            gridGallery.style.display = '';
+            gridGallery.style.gridTemplateColumns = '';
+            gridGallery.style.gridTemplateRows = '';
+            gridGallery.style.gridTemplateAreas = '';
+            gridGallery.style.height = '';
+            gridGallery.style.gap = '';
+            gridGallery.style.flexDirection = '';
+            gridGallery.className = 'grid-gallery';
+            gridGallery.removeAttribute('style');
+
             updateGallery();
 
             modalTitle.textContent = title;
@@ -289,7 +341,6 @@ document.addEventListener("DOMContentLoaded", function() {
             modalOverlay.classList.add('active');
             modal.classList.add('active');
         };
-
         const closeModal = () => {
             modal.classList.add('closing');
             modalOverlay.classList.add('closing');
