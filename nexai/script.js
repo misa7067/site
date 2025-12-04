@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // ======================================================
-    // ==== СКРИПТ АНИМАЦИИ ПОЯВЛЕНИЯ ЭЛЕМЕНТОВ ПРИ СКРОЛЛЕ ====
+    // ==== СКРИПТ АНИМАЦИИ ПОЯВЛЕНИЯ ЭЛЕМЕНТОВ ====
     // ======================================================
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ======================================================
-    // ========= СКРИПТ ДЛЯ ГЕОМЕТРИЧЕСКОГО ФОНА =========
+    // ========= ФОНОВАЯ АНИМАЦИЯ (CANVAS) =========
     // ======================================================
     function initStaticPattern() {
         const canvas = document.getElementById('patternCanvas');
@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         function animate() {
             const currentTime = Date.now() - startTime;
-            // Нормализуем время в диапазон [0, 2*PI] для плавного повторения
             const normalizedTime = (currentTime * 0.0025) % (Math.PI * 2);
 
             ctx.fillStyle = '#000000';
@@ -43,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             for (let x = patternSize; x < canvas.width; x += patternSize) {
                 for (let y = patternSize; y < canvas.height; y += patternSize) {
-                    // Используем normalizedTime для плавного циклического изменения
                     const opacity = 0.1 + Math.sin(normalizedTime + x * 0.01 + y * 0.01) * 0.08;
 
                     ctx.strokeStyle = `rgba(150, 150, 170, ${opacity})`;
@@ -80,20 +78,16 @@ document.addEventListener("DOMContentLoaded", function() {
             if (document.hidden) {
                 stopAnimation();
             } else {
-                // Перезапускаем с нового времени при возвращении на вкладку
                 startTime = Date.now() - (startTime % (Math.PI * 2 * 1000));
                 animate();
             }
         });
     }
-
     initStaticPattern();
 
     // ======================================================
-    // ==== СЛАЙДЕР И МОДАЛЬНОЕ ОКНО ====
+    // ==== СЛАЙДЕР ПРОЕКТОВ ====
     // ======================================================
-
-    // ==== ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ПРОЕКТОВ ====
     function initProjectsSlider() {
         const track = document.querySelector('.projects-slider-track');
         if (!track) return;
@@ -134,17 +128,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (nextButton) {
             nextButton.addEventListener('click', () => {
-                if (currentIndex < slides.length - 1) {
-                    moveToSlide(currentIndex + 1);
-                }
+                if (currentIndex < slides.length - 1) moveToSlide(currentIndex + 1);
             });
         }
 
         if (prevButton) {
             prevButton.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    moveToSlide(currentIndex - 1);
-                }
+                if (currentIndex > 0) moveToSlide(currentIndex - 1);
             });
         }
 
@@ -177,7 +167,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     initProjectsSlider();
 
-    // ==== ЛОГИКА ДЛЯ МОДАЛЬНОГО ОКНА ====
+    // ======================================================
+    // ==== ЛОГИКА МОДАЛЬНОГО ОКНА (С ПОДДЕРЖКОЙ СМЕНЫ ТЕКСТА) ====
+    // ======================================================
     const modalOverlay = document.getElementById('project-modal-overlay');
     const modal = document.getElementById('project-modal');
 
@@ -193,6 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const projectLinks = document.querySelectorAll('.project-card-link');
 
         let currentImages = [];
+        let currentDescriptions = []; // Массив текстов для каждой страницы
         let currentPage = 0;
 
         function updateGallery() {
@@ -200,88 +193,97 @@ document.addEventListener("DOMContentLoaded", function() {
             const startIndex = currentPage * 3;
             const pageImages = currentImages.slice(startIndex, startIndex + 3);
 
-            // СБРАСЫВАЕМ СТИЛИ
+            // ОБНОВЛЕНИЕ ТЕКСТА
+            // Если для текущей страницы есть описание - показываем его, иначе показываем первое
+            if (currentDescriptions[currentPage]) {
+                modalDescription.innerHTML = currentDescriptions[currentPage];
+            } else {
+                modalDescription.innerHTML = currentDescriptions[0];
+            }
+
+            // СБРОС СТИЛЕЙ
             gridGallery.className = 'grid-gallery';
             gridGallery.removeAttribute('style');
 
-            // Проверяем, это 4-й кейс (по названию изображений)
-            const isFourthCase = currentImages.some(img =>
-                img.includes('hardy1.png') ||
-                img.includes('hardy2.jpg') ||
-                img.includes('hardy3.png')
+            // ЛОГИКА РАСКЛАДКИ КАРТИНОК
+            // Проверяем, это 4-й кейс (по названию)
+// ЛОГИКА РАСКЛАДКИ КАРТИНОК
+            // Проверяем, нужен ли специальный макет (Hardy или SmartEstate)
+            const isSpecialLayout = currentImages.some(img =>
+                img.includes('hardy') ||
+                img.includes('rent')
             );
 
-            if (isFourthCase && pageImages.length >= 3) {
-                // СПЕЦИАЛЬНЫЙ МАКЕТ ДЛЯ 4-Й КАРТОЧКИ
+            if (isSpecialLayout && pageImages.length >= 3) {
+                // СПЕЦИАЛЬНЫЙ МАКЕТ (2 слева, 1 справа)
                 gridGallery.className = 'grid-gallery special-layout';
 
-                // Левая верхняя фотка
+                // Левое верхнее фото (index 0)
                 if (pageImages[0]) {
                     const leftTop = document.createElement('div');
                     leftTop.className = 'grid-item special-left-top';
-                    leftTop.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                    leftTop.innerHTML = `<img src="${pageImages[0]}" alt="Img" loading="lazy"><div class="grid-caption"></div>`;
                     gridGallery.appendChild(leftTop);
                 }
-
-                // Левая нижняя фотка
+                // Левое нижнее фото (index 1)
                 if (pageImages[1]) {
                     const leftBottom = document.createElement('div');
                     leftBottom.className = 'grid-item special-left-bottom';
-                    leftBottom.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption"></div>`;
+                    leftBottom.innerHTML = `<img src="${pageImages[1]}" alt="Img" loading="lazy"><div class="grid-caption"></div>`;
                     gridGallery.appendChild(leftBottom);
                 }
-
-                // Правая большая фотка
+                // Правое большое фото (index 2)
                 if (pageImages[2]) {
                     const rightLarge = document.createElement('div');
                     rightLarge.className = 'grid-item special-right-large';
-                    rightLarge.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption"></div>`;
+                    rightLarge.innerHTML = `<img src="${pageImages[2]}" alt="Img" loading="lazy"><div class="grid-caption"></div>`;
                     gridGallery.appendChild(rightLarge);
                 }
-
             } else if (pageImages.length >= 3) {
-                // СТАНДАРТНЫЙ МАКЕТ ДЛЯ ВСЕХ ОСТАЛЬНЫХ
+                // СТАНДАРТНЫЙ МАКЕТ (1 большая, 2 маленьких)
                 gridGallery.className = 'grid-gallery standard-layout';
-
                 if (pageImages[0]) {
                     const item = document.createElement('div');
                     item.className = 'grid-item large';
-                    item.innerHTML = `<img src="${pageImages[0]}" alt="Скриншот ${startIndex + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                    item.innerHTML = `<img src="${pageImages[0]}" alt="Img" loading="lazy"><div class="grid-caption"></div>`;
                     gridGallery.appendChild(item);
                 }
                 if (pageImages[1]) {
                     const item = document.createElement('div');
                     item.className = 'grid-item small';
-                    item.innerHTML = `<img src="${pageImages[1]}" alt="Скриншот ${startIndex + 2}" loading="lazy"><div class="grid-caption"></div>`;
+                    item.innerHTML = `<img src="${pageImages[1]}" alt="Img" loading="lazy"><div class="grid-caption"></div>`;
                     gridGallery.appendChild(item);
                 }
                 if (pageImages[2]) {
                     const item = document.createElement('div');
                     item.className = 'grid-item small';
-                    item.innerHTML = `<img src="${pageImages[2]}" alt="Скриншот ${startIndex + 3}" loading="lazy"><div class="grid-caption"></div>`;
+                    item.innerHTML = `<img src="${pageImages[2]}" alt="Img" loading="lazy"><div class="grid-caption"></div>`;
                     gridGallery.appendChild(item);
                 }
             } else {
-                // Меньше 3 изображений
-                pageImages.forEach((image, index) => {
+                // МЕНЬШЕ 3 КАРТИНОК
+                pageImages.forEach((image) => {
                     const item = document.createElement('div');
                     item.className = 'grid-item';
                     item.style.height = '250px';
-                    item.innerHTML = `<img src="${image}" alt="Скриншот ${startIndex + index + 1}" loading="lazy"><div class="grid-caption"></div>`;
+                    item.innerHTML = `<img src="${image}" alt="Img" loading="lazy"><div class="grid-caption"></div>`;
                     gridGallery.appendChild(item);
                 });
             }
+
             const totalPages = Math.ceil(currentImages.length / 3);
             counter.textContent = `${currentPage + 1} / ${totalPages}`;
-            prevBtn.style.opacity = currentPage === 0 ? '0.3' : '1';
-            prevBtn.style.pointerEvents = currentPage === 0 ? 'none' : 'all';
-            nextBtn.style.opacity = currentPage === totalPages - 1 ? '0.3' : '1';
-            nextBtn.style.pointerEvents = currentPage === totalPages - 1 ? 'none' : 'all';
 
+            // УПРАВЛЕНИЕ КНОПКАМИ
             const showControls = totalPages > 1;
             prevBtn.style.display = showControls ? 'flex' : 'none';
             nextBtn.style.display = showControls ? 'flex' : 'none';
             counter.style.display = showControls ? 'block' : 'none';
+
+            prevBtn.style.opacity = currentPage === 0 ? '0.3' : '1';
+            prevBtn.style.pointerEvents = currentPage === 0 ? 'none' : 'all';
+            nextBtn.style.opacity = currentPage === totalPages - 1 ? '0.3' : '1';
+            nextBtn.style.pointerEvents = currentPage === totalPages - 1 ? 'none' : 'all';
         }
 
         function nextPage() {
@@ -311,46 +313,44 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
+        // ФУНКЦИЯ ОТКРЫТИЯ МОДАЛКИ
         const openModal = (cardLink) => {
             const title = cardLink.querySelector('.project-card-title').textContent;
             const tags = cardLink.dataset.tags || '';
-            const description = cardLink.dataset.fullDescription || '<p>Описание не найдено.</p>';
-            const images = cardLink.dataset.images || '';
 
+            // ПОЛУЧАЕМ И РАЗБИВАЕМ ОПИСАНИЕ ПО РАЗДЕЛИТЕЛЮ "|||"
+            const rawDescription = cardLink.dataset.fullDescription || '<p>Описание не найдено.</p>';
+            currentDescriptions = rawDescription.split('|||');
+
+            const images = cardLink.dataset.images || '';
             currentImages = images.split(',').map(url => url.trim()).filter(Boolean);
             currentPage = 0;
 
-            // СБРАСЫВАЕМ СТИЛИ ГАЛЕРЕИ ПЕРЕД ОБНОВЛЕНИЕМ
+            // СБРОС
             gridGallery.style.display = '';
-            gridGallery.style.gridTemplateColumns = '';
-            gridGallery.style.gridTemplateRows = '';
-            gridGallery.style.gridTemplateAreas = '';
-            gridGallery.style.height = '';
-            gridGallery.style.gap = '';
-            gridGallery.style.flexDirection = '';
             gridGallery.className = 'grid-gallery';
             gridGallery.removeAttribute('style');
 
             updateGallery();
 
             modalTitle.textContent = title;
-            modalDescription.innerHTML = description;
             modalTags.innerHTML = tags.split(',').map(tag => tag.trim() ? `<span>${tag.trim()}</span>` : '').join('');
 
             document.body.classList.add('modal-open');
             modalOverlay.classList.add('active');
             modal.classList.add('active');
         };
+
         const closeModal = () => {
             modal.classList.add('closing');
             modalOverlay.classList.add('closing');
-
             setTimeout(() => {
                 document.body.classList.remove('modal-open');
                 modalOverlay.classList.remove('active', 'closing');
                 modal.classList.remove('active', 'closing');
             }, 300);
         };
+
         projectLinks.forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
@@ -364,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ======================================================
-    // ==== ПОЛНОЭКРАННЫЙ РЕЖИМ ДЛЯ ИЗОБРАЖЕНИЙ (ВОЗВРАЩЕН) ====
+    // ==== ПОЛНОЭКРАННЫЙ РЕЖИМ ====
     // ======================================================
     const fullscreenOverlay = document.getElementById('fullscreen-overlay');
     if (fullscreenOverlay) {
@@ -381,7 +381,6 @@ document.addEventListener("DOMContentLoaded", function() {
             fullscreenOverlay.classList.remove('active');
         }
 
-        // Открытие по клику на картинку в галерее
         if(gridGallery) {
             gridGallery.addEventListener('click', function(e) {
                 if (e.target.tagName === 'IMG') {
@@ -390,14 +389,13 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
 
-        // Закрытие
         fullscreenCloseBtn.addEventListener('click', closeFullscreen);
         fullscreenOverlay.addEventListener('click', e => { if (e.target === fullscreenOverlay) closeFullscreen(); });
         document.addEventListener('keydown', e => { if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) closeFullscreen(); });
     }
 
     // ======================================================
-    // ==== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ====
+    // ==== ПЛАВНЫЙ СКРОЛЛ ====
     // ======================================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {

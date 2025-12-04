@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexAI | Политика конфиденциальности</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .legal-content h1 { font-family: var(--font-mono); color: var(--text-primary); margin-bottom: 40px; font-size: 2.5rem; }
+        .legal-content h2 { font-family: var(--font-mono); color: var(--accent); margin-top: 40px; margin-bottom: 20px; font-size: 1.5rem; }
+        .legal-content p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 15px; font-size: 1rem; }
+        .legal-content ul { list-style: disc; padding-left: 20px; color: var(--text-secondary); margin-bottom: 20px; }
+        .legal-content li { margin-bottom: 10px; line-height: 1.6; }
+        @media (max-width: 768px) {
+            .legal-content h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div data-include="components/header.html"></div>
+
+    <main class="section">
+        <div class="container legal-content reveal">
+            <h1>Политика конфиденциальности</h1>
+
+            <p>Ваше доверие — наш актив. Здесь описано, как NexAI работает с вашими данными.</p>
+
+            <h2>1. Сбор данных</h2>
+            <p>При использовании сайта и Telegram-бота мы можем обрабатывать:</p>
+            <ul>
+                <li><strong>Данные аккаунта Telegram:</strong> Username, ID (для технического обеспечения работы бота).</li>
+                <li><strong>Контекст задачи:</strong> Текст, голос и изображения, которые вы отправляете боту для оценки проекта.</li>
+            </ul>
+
+            <h2>2. Использование Искусственного Интеллекта (AI)</h2>
+            <p>Для анализа ваших задач и формирования оценки мы используем технологии LLM (Large Language Models), предоставляемые компанией OpenAI.</p>
+            <p><strong>Важно:</strong> Отправляя данные в бот, вы соглашаетесь на их автоматизированную обработку алгоритмами ИИ. Мы настроили систему так, чтобы данные использовались только для генерации ответа и не сохранялись для дообучения моделей (политика Zero Data Retention, где это возможно).</p>
+
+            <h2>3. Зачем нам это нужно</h2>
+            <p>Исключительно для того, чтобы:</p>
+            <ul>
+                <li>Сформировать для вас техническое задание.</li>
+                <li>Рассчитать бюджет проекта.</li>
+                <li>Связаться с вами для начала работы.</li>
+            </ul>
+
+            <h2>4. Безопасность</h2>
+            <p>Мы не продаем ваши контакты спам-базам. Доступ к вашим проектам имеют только инженеры NexAI под NDA (соглашением о неразглашении).</p>
+
+            <h2>5. Контакты</h2>
+            <p>Вы можете запросить удаление всей истории переписки в любой момент.</p>
+            <p>Связь с владельцем: <a href="https://t.me/Feakly" style="color: var(--accent);">@Feakly</a> (Михаил Королев)</p>
+        </div>
+    </main>
+
+    <div data-include="components/footer.html"></div>
+
+    <!-- ВАЖНО: Скрипт -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            document.querySelectorAll('[data-include]').forEach(el => {
+                const filePath = el.getAttribute('data-include');
+                fetch(filePath).then(r => r.text()).then(d => { el.outerHTML = d; });
+            });
+        });
+    </script>
+</body>
+</html>

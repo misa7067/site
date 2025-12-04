@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexAI | Условия использования</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .legal-content h1 { font-family: var(--font-mono); color: var(--text-primary); margin-bottom: 40px; font-size: 2.5rem; }
+        .legal-content h2 { font-family: var(--font-mono); color: var(--accent); margin-top: 40px; margin-bottom: 20px; font-size: 1.5rem; }
+        .legal-content p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 15px; font-size: 1rem; }
+        .legal-content li { margin-bottom: 10px; color: var(--text-secondary); }
+        @media (max-width: 768px) {
+            .legal-content h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div data-include="components/header.html"></div>
+
+    <main class="section">
+        <!-- Добавил класс reveal для анимации -->
+        <div class="container legal-content reveal">
+            <h1>Условия использования</h1>
+
+            <p>Добро пожаловать. NexAI — это студия инженерной разработки. Используя наш сайт и Telegram-бота, вы соглашаетесь с правилами ниже.</p>
+
+            <h2>1. Статус информации и AI-расчетов</h2>
+            <p>Информация на сайте и ответы нашего AI-ассистента (бота) носят исключительно <strong>информационный характер</strong> и не являются публичной офертой (ст. 437 ГК РФ).</p>
+            <p><strong>Важно про Бота:</strong> Наш бот использует алгоритмы искусственного интеллекта для предварительной оценки. Вилка бюджета и сроки, озвученные ботом, являются ориентировочными. Финальная стоимость фиксируется <strong>только</strong> после личного аудита задачи инженером.</p>
+
+            <h2>2. Интеллектуальная собственность</h2>
+            <p>Дизайн, программный код, тексты и архитектурные решения NexAI являются интеллектуальной собственностью студии. Копирование материалов (в том числе структуры бота) без разрешения запрещено.</p>
+
+            <h2>3. Оказание услуг</h2>
+            <p>Мы работаем по принципу прозрачности. Фактическое сотрудничество начинается только после согласования Технического Задания (ТЗ). Переписка в мессенджерах имеет юридическую силу, если это оговорено сторонами.</p>
+
+            <h2>4. Ограничение ответственности</h2>
+            <p>Мы не несем ответственности за:</p>
+            <ul>
+                <li>Сбои в работе сторонних платформ (Telegram, OpenAI, хостинг-провайдеры).</li>
+                <li>Убытки, возникшие из-за неверной интерпретации ответов AI-бота.</li>
+            </ul>
+
+            <h2>5. Изменения</h2>
+            <p>Мы оставляем за собой право обновлять эти условия. Актуальная версия всегда доступна на этой странице.</p>
+        </div>
+    </main>
+
+    <div data-include="components/footer.html"></div>
+
+    <!-- ВАЖНО: Скрипт для загрузки шапки и анимации -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Анимация появления
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Загрузка компонентов
+            document.querySelectorAll('[data-include]').forEach(el => {
+                const filePath = el.getAttribute('data-include');
+                fetch(filePath).then(r => r.text()).then(d => { el.outerHTML = d; });
+            });
+        });
+    </script>
+</body>
+</html>
