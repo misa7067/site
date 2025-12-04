@@ -795,17 +795,36 @@ body.modal-open { overflow: hidden; }
     border-radius: 4px;
 }
 
-.modal-description p {
-    color: var(--text-secondary);
+.modal-description p,
+.modal-description ul,
+.modal-description li {
+    color: var(--text-secondary); /* Тот самый серый цвет (#888888) */
     line-height: 1.7;
     font-size: 1.05rem;
 }
 
+.modal-description p {
+    margin-bottom: 15px; /* Отступ между абзацами */
+}
+
+.modal-description ul {
+    list-style: disc;       /* Возвращаем точки */
+    padding-left: 20px;     /* Отступ слева */
+    margin-bottom: 20px;    /* Отступ снизу */
+}
+
+.modal-description li {
+    margin-bottom: 8px;     /* Расстояние между пунктами списка */
+}
+
+
+
 .modal-description h4 {
-    color: var(--text-primary);
+    color: var(--text-primary); /* Белый цвет заголовков (#EAEAEA) */
     margin-top: 22px;
     margin-bottom: 10px;
     font-size: 1.15rem;
+    font-weight: 600;
 }
 
 /* Адаптивность */
