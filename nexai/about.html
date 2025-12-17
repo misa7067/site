@@ -79,6 +79,11 @@
                 <a href="index.html#projects">Проекты</a>
                 <a href="index.html#contact">Связаться</a>
             </nav>
+            <button class="burger-btn" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -215,6 +220,28 @@
     <!-- Скрипт для анимации появления и фона -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+        // === ЛОГИКА БУРГЕР-МЕНЮ ===
+    const burgerBtn = document.querySelector('.burger-btn');
+    const nav = document.querySelector('.main-nav');
+    const navLinks = document.querySelectorAll('.main-nav a');
+
+    if (burgerBtn && nav) {
+        // Открытие/закрытие по кнопке
+        burgerBtn.addEventListener('click', () => {
+            burgerBtn.classList.toggle('active');
+            nav.classList.toggle('active');
+            document.body.classList.toggle('modal-open'); // Блокируем прокрутку фона
+        });
+
+        // Закрытие меню при клике на любую ссылку
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                burgerBtn.classList.remove('active');
+                nav.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            });
+        });
+    }
             // Анимация появления при скролле
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
