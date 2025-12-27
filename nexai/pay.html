@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реквизиты NexAI | ИП Королев М.А.</title>
+    <link rel="stylesheet" href="style.css"> <!-- Подключаем твои стили -->
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .req-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .req-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+        .req-header h1 {
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+            color: #fff;
+        }
+        .req-header p {
+            color: #888;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        .req-row {
+            margin-bottom: 20px;
+        }
+        .req-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .req-value-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .req-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            color: #eee;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #007bff; /* Твой акцентный цвет */
+            cursor: pointer;
+            padding: 5px;
+            transition: opacity 0.2s;
+        }
+        .copy-btn:hover {
+            opacity: 0.7;
+        }
+        .download-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #fff;
+            color: #000;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: transform 0.2s;
+        }
+        .download-btn:hover {
+            transform: scale(1.02);
+        }
+        /* Уведомление о копировании */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+        }
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+<div class="req-card">
+    <div class="req-header">
+        <h1>NexAI | Реквизиты</h1>
+        <p>ИП Королев Михаил Алексеевич</p>
+    </div>
+
+    <!-- ИНН -->
+    <div class="req-row">
+        <span class="req-label">ИНН</span>
+        <div class="req-value-box">
+            <span class="req-value">632416774349</span>
+            <button class="copy-btn" onclick="copyText('632416774349')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Расчетный счет -->
+    <div class="req-row">
+        <span class="req-label">Расчетный счет (₽)</span>
+        <div class="req-value-box">
+            <span class="req-value">40802810000009183345</span>
+            <button class="copy-btn" onclick="copyText('40802810000009183345')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- БИК -->
+    <div class="req-row">
+        <span class="req-label">БИК Банка</span>
+        <div class="req-value-box">
+            <span class="req-value">044525974</span>
+            <button class="copy-btn" onclick="copyText('044525974')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Банк -->
+    <div class="req-row">
+        <span class="req-label">Банк</span>
+        <div class="req-value-box">
+            <span class="req-value">АО «ТБанк»</span>
+            <button class="copy-btn" onclick="copyText('АО ТБанк')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Корр. счет -->
+    <div class="req-row">
+        <span class="req-label">Корр. счет</span>
+        <div class="req-value-box">
+            <span class="req-value">30101810145250000974</span>
+            <button class="copy-btn" onclick="copyText('30101810145250000974')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Доп инфо -->
+    <div style="margin-top: 20px; font-size: 0.85rem; color: #666; text-align: center;">
+        ОГРНИП: 325632700217522<br>
+        Работаем без НДС (Налог на профессиональный доход)
+    </div>
+
+    <a href="requisites.pdf" class="download-btn" download>
+        Скачать Карточку (PDF)
+    </a>
+
+    <div style="margin-top: 15px; text-align: center;">
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 0.9rem;">← Вернуться на сайт</a>
+    </div>
+</div>
+
+<div id="toast">Скопировано в буфер обмена</div>
+
+<script>
+    function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        });
+    }
+</script>
+
+</body>
+</html>
