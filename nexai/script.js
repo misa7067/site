@@ -406,4 +406,75 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+    // ======================================================
+    // ==== МОБИЛЬНОЕ МЕНЮ (БУРГЕР) ====
+    // ======================================================
+    // Ждем загрузки header.html, так как он грузится через fetch
+    const checkHeaderInterval = setInterval(() => {
+        const burgerBtn = document.querySelector('.burger-btn');
+        const nav = document.querySelector('.main-nav');
+        const navLinks = document.querySelectorAll('.main-nav a');
+
+        // Как только кнопка и меню появились в DOM
+        if (burgerBtn && nav) {
+            clearInterval(checkHeaderInterval); // Останавливаем проверку
+
+            // Клик по бургеру
+            burgerBtn.addEventListener('click', () => {
+                burgerBtn.classList.toggle('active');
+                nav.classList.toggle('active');
+                document.body.classList.toggle('modal-open'); // Блок прокрутки фона
+            });
+
+            // Закрытие меню при клике на любую ссылку
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    burgerBtn.classList.remove('active');
+                    nav.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                });
+            });
+        }
+    }, 100);
+// ======================================================
+    // ==== УЛУЧШЕННЫЙ БЕСКОНЕЧНЫЙ СКРОЛЛ (ФИКС ЗАЛИПАНИЯ) ====
+    // ======================================================
+    const mobileTrack = document.querySelector('.projects-slider-track');
+    const mobileBtnNext = document.querySelector('.slider-arrow.next');
+    const mobileBtnPrev = document.querySelector('.slider-arrow.prev');
+
+    if (mobileTrack && mobileBtnNext && mobileBtnPrev) {
+        // Ширина карточки (280px) + отступ (20px) = 300px
+        const itemWidth = 300;
+
+        mobileBtnNext.addEventListener('click', () => {
+            const currentScroll = mobileTrack.scrollLeft;
+            const maxScroll = mobileTrack.scrollWidth - mobileTrack.clientWidth;
+
+            // Если мы дошли до конца (с небольшим запасом 10px) -> идем в НАЧАЛО
+            if (currentScroll >= maxScroll - 10) {
+                mobileTrack.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                // Иначе считаем следующую точку остановки
+                // Math.floor округляет вниз, чтобы найти текущий "слот", +1 переносит на следующий
+                const nextPosition = (Math.floor(currentScroll / itemWidth) + 1) * itemWidth;
+                mobileTrack.scrollTo({ left: nextPosition, behavior: 'smooth' });
+            }
+        });
+
+        mobileBtnPrev.addEventListener('click', () => {
+            const currentScroll = mobileTrack.scrollLeft;
+            const maxScroll = mobileTrack.scrollWidth - mobileTrack.clientWidth;
+
+            // Если мы в самом начале (меньше 10px) -> идем в КОНЕЦ
+            if (currentScroll <= 10) {
+                mobileTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
+            } else {
+                // Иначе считаем предыдущую точку
+                // Math.ceil округляет вверх, -1 возвращает назад
+                const prevPosition = (Math.ceil(currentScroll / itemWidth) - 1) * itemWidth;
+                mobileTrack.scrollTo({ left: prevPosition, behavior: 'smooth' });
+            }
+        });
+    }
 });

@@ -1242,3 +1242,235 @@ html {
         margin: 0;
     }
 }
+/* ====================================================== */
+/* ============== МОБИЛЬНАЯ АДАПТАЦИЯ ============== */
+/* ====================================================== */
+
+/* Скрываем кнопку бургера на ПК */
+.burger-btn { display: none; }
+
+@media (max-width: 900px) {
+    /* ==== ОБЩИЕ НАСТРОЙКИ ==== */
+    html { font-size: 100%; } /* Уменьшаем базу шрифта */
+    .container { padding: 0 20px; }
+    .section { padding: 60px 0; }
+
+    /* Заголовки */
+    .section-header h2 { font-size: 1.8rem; transform: none; }
+    .hero-content h1 { font-size: 1.8rem; }
+    .hero-content { padding: 25px 20px; }
+    .section-header { margin-bottom: 40px; }
+
+    /* ==== БУРГЕР-МЕНЮ (Дизайн) ==== */
+    .burger-btn {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1000;
+        padding: 0;
+    }
+    .burger-btn span {
+        width: 100%;
+        height: 2px;
+        background-color: var(--text-primary);
+        transition: 0.3s;
+        border-radius: 2px;
+    }
+
+    /* Анимация крестика */
+    .burger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .burger-btn.active span:nth-child(2) { opacity: 0; }
+    .burger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+    /* Само выезжающее меню */
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Спрятано справа */
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(5, 5, 5, 0.98);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        z-index: 999;
+        border-left: 1px solid var(--border);
+    }
+    .main-nav.active { right: 0; }
+
+    .main-nav a {
+        font-size: 1.5rem;
+        margin: 15px 0;
+        display: block;
+        margin-left: 0; /* Убираем отступ ПК версии */
+    }
+
+    /* ==== СЕТКИ И БЛОКИ ==== */
+
+    /* Блок "Инженер" (с фото) - перестраиваем в колонку */
+    /* Используем !important, чтобы перебить inline-стили в HTML */
+    .reveal[style*="grid"] {
+        display: flex !important;
+        flex-direction: column;
+        gap: 30px !important;
+        text-align: center;
+    }
+
+/* ==== КАРТОЧКИ КАК НА ПК (УЗКИЕ + ЗАТЕМНЕНИЯ ПО БОКАМ) ==== */
+
+    /* 1. Возвращаем маску (затемнения по бокам) */
+    .projects-slider-wrapper {
+        position: relative;
+        /* Градиент: прозрачное -> черное -> черное -> прозрачное */
+        -webkit-mask: linear-gradient(90deg,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%
+        );
+        mask: linear-gradient(90deg,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%
+        );
+        padding: 0;
+        overflow: hidden; /* Скрываем всё, что вылезает за маску */
+    }
+
+    /* 2. Лента прокрутки */
+    .projects-slider-track {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;    /* Скролл пальцем */
+        gap: 20px;           /* Отступ между карточками */
+
+        /* Важные отступы, чтобы карточки не обрезались маской сразу */
+        padding: 0 40px;
+
+        transform: none !important;
+        width: auto !important;
+        scroll-snap-type: x mandatory; /* Прилипание */
+        scrollbar-width: none;
+    }
+    .projects-slider-track::-webkit-scrollbar { display: none; }
+
+    .project-slide {
+        display: flex;
+        gap: 20px;
+        min-width: max-content;
+        padding: 0;
+        opacity: 1 !important;
+    }
+
+    /* 3. КАРТОЧКИ (Фиксированный размер, как на ПК) */
+    .project-card-link {
+        /* Делаем их узкими (280px), а не широкими */
+        min-width: 280px;
+        max-width: 280px;
+        scroll-snap-align: center; /* Карточка встает по центру */
+    }
+
+    .project-card {
+        width: 100%;
+        height: 100%;
+        min-height: 380px; /* Фиксируем высоту */
+        margin: 0;
+        border: 1px solid var(--border);
+        background-color: #0A0A0A;
+        /* Тень как на ПК */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Картинка как на ПК */
+    .project-card-image {
+        height: 160px;
+    }
+
+    /* Текст и отступы */
+    .project-card-content { padding: 20px; }
+    .project-card-title { font-size: 1.15rem; margin-bottom: 10px; }
+    .project-card-summary { font-size: 0.9rem; line-height: 1.5; }
+
+    /* 4. СТРЕЛКИ (Поверх маски) */
+    .slider-controls {
+        display: flex !important;
+        width: 100%;
+        height: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        justify-content: space-between;
+        z-index: 20;
+        pointer-events: none;
+        /* Стрелки сдвигаем чуть внутрь, чтобы не попали в зону прозрачности */
+        padding: 0 10px;
+    }
+
+    .slider-arrow {
+        pointer-events: auto;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.8); /* Более темный фон */
+        border: 1px solid var(--border);
+        color: white;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Сетка услуг */
+    .specialization-grid { grid-template-columns: 1fr; }
+
+    /* Сетка принципов */
+    .features-grid { grid-template-columns: 1fr; }
+
+    /* Футер */
+    .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+
+    /* Контакты */
+    .contact-links { grid-template-columns: 1fr; }
+
+    /* ==== МОДАЛЬНОЕ ОКНО ==== */
+    #project-modal {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        top: 0;
+        left: 0;
+        transform: none !important;
+        border: none;
+    }
+    .modal-content-wrapper { padding: 80px 20px 40px 20px; }
+    .modal-close-btn {
+        top: 20px;
+        right: 20px;
+        background: rgba(255,255,255,0.1);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    /* Сбрасываем сетку галереи в одну колонку */
+    .grid-gallery, .grid-gallery.special-layout {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        gap: 15px;
+    }
+    .grid-item { height: 220px !important; width: 100% !important; margin: 0 !important; }
+}
