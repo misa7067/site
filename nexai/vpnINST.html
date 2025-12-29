@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexAI | Ручная настройка</title>
+
+    <link rel="icon" href="favicon.png" type="image/png">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NexAI | Ручная настройка">
+    <meta property="og:description" content="Инструкция по ручному импорту конфигурации NexVPN.">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        #howto-page { padding-top: 160px; padding-bottom: 100px; }
+
+        .vertical-steps-wrapper {
+            max-width: 700px;
+            margin: 60px auto 0;
+            position: relative;
+        }
+
+        /* Линия таймлайна */
+        .vertical-steps-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .v-step-item {
+            position: relative;
+            padding-left: 45px;
+            padding-bottom: 60px;
+        }
+
+        .v-step-item:last-child { padding-bottom: 0; }
+
+        /* Маркеры */
+        .v-step-marker {
+            position: absolute;
+            left: -4px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .v-step-number {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            display: inline-block;
+            background: rgba(48, 138, 191, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .v-step-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .v-step-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Стиль для картинки */
+        .instruction-image-container {
+            margin: 25px 0;
+            border: 1px solid var(--border);
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .instruction-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+            opacity: 0.9;
+        }
+
+        /* Выделение жирным */
+        b { color: var(--text-primary); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div data-include="components/header.html"></div>
+    <canvas id="patternCanvas"></canvas>
+
+    <main>
+        <section id="howto-page" class="section">
+            <div class="container">
+
+                <div class="section-header reveal" style="text-align: center;">
+                    <h1 style="font-size: 2.8rem; line-height: 1.1;">Ручная настройка</h1>
+                    <p style="margin-top: 25px; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;">
+                        В случае, если по какой-то причине не сработал автоматический импорт, выполните настройку ниже.
+                    </p>
+                </div>
+
+                <div class="vertical-steps-wrapper reveal">
+
+                    <!-- ШАГ 01 -->
+                    <div class="v-step-item">
+                        <div class="v-step-marker"></div>
+                        <div class="v-step-number">01 // INIT</div>
+                        <h3 class="v-step-title">Вход в меню</h3>
+                        <p class="v-step-desc">
+                            Откройте бот <b>NexVPN</b> в Telegram.<br>
+                            Введите команду <span style="font-family: var(--font-mono); color: var(--accent);">/start</span> для перезагрузки интерфейса и вызова главного меню.
+                        </p>
+                    </div>
+
+                    <!-- ШАГ 02 -->
+                    <div class="v-step-item">
+                        <div class="v-step-marker"></div>
+                        <div class="v-step-number">02 // GET KEY</div>
+                        <h3 class="v-step-title">Копирование конфигурации</h3>
+                        <p class="v-step-desc">
+                            1. Нажмите кнопку <b>«Установить VPN»</b>.<br>
+                            2. В появившемся сообщении вы увидите ключ подключения (набор символов).<br>
+                            3. Просто <b>нажмите на код ключа</b> — он автоматически скопируется в буфер обмена вашего устройства.
+                        </p>
+                    </div>
+
+                    <!-- ШАГ 03 -->
+                    <div class="v-step-item">
+                        <div class="v-step-marker"></div>
+                        <div class="v-step-number">03 // MANUAL IMPORT</div>
+                        <h3 class="v-step-title">Импорт в приложение</h3>
+                        <p class="v-step-desc">
+                            Вернитесь в приложение <b>v2RayTun</b>.<br>
+                            Нажмите кнопку <b>«+»</b> (обычно в углу экрана), затем выберите пункт <b>«Добавить из буфера»</b> (Import from clipboard).
+                        </p>
+                    </div>
+
+                    <!-- ШАГ 04 (Картинка и финал) -->
+                    <!-- ШАГ 04 (Картинка и финал) -->
+                    <div class="v-step-item">
+                        <!-- Убрали style="background: #fff..." -->
+                        <div class="v-step-marker"></div>
+
+                        <!-- Убрали style="color: #fff..." -->
+                        <div class="v-step-number">04 // CONNECT</div>
+
+                        <h3 class="v-step-title">Активация</h3>
+
+                        <!-- Картинка -->
+                        <div class="instruction-image-container">
+                            <img src="v2ray.jpg" alt="Интерфейс v2RayTun" class="instruction-image">
+                        </div>
+
+                        <p class="v-step-desc">
+                            Для Включения/Выключения VPN нажимайте большую круглую кнопку, находящуюся в центре экрана (как показано на изображении выше).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="cta-center reveal" style="text-align: center; margin-top: 80px;">
+                    <a href="https://t.me/NexAI_Studio_Bot" target="_blank" class="cta-button" style="padding: 20px 50px; text-decoration: none;">
+                        [ ОТКРЫТЬ БОТ NEXVPN ]
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div data-include="components/footer.html"></div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('[data-include]').forEach(el => {
+                fetch(el.getAttribute('data-include')).then(r => r.text()).then(d => { el.outerHTML = d; });
+            });
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
