@@ -5,74 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexAI | Наш подход</title>
 
-    <!-- Иконка сайта -->
     <link rel="icon" href="favicon.png" type="image/png">
-
-    <!-- Красивая ссылка в Telegram (Open Graph) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nexai.team/about.html">
     <meta property="og:title" content="NexAI | Наш подход">
     <meta property="og:description" content="Инженерная этика, принципы работы и философия NexAI.">
     <meta property="og:image" content="https://nexai.team/og-preview.jpg">
-
-    <!-- Подключаем основной файл стилей -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Внутренние стили для About (Шапка и Лого) -->
-    <style>
-        /* 1. Делаем шапку заметной на черном фоне */
-        .main-header {
-            background-color: rgba(10, 10, 10, 0.95) !important; /* Чуть светлее фона */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important; /* Четкая линия снизу */
+    <!-- START: NexAI GEO Data (Schema.org) -->
+    <!-- Это видят только роботы. Люди видят красивый дизайн ниже. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://nexai.team/#organization",
+          "name": "NexAI",
+          "alternateName": "NexAI Engineering",
+          "url": "https://nexai.team",
+          "logo": "https://nexai.team/favicon.png",
+          "slogan": "Engineering Custom AI Tools & Autonomous Agents",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Togliatti",
+            "addressCountry": "RU"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "sales",
+            "url": "https://t.me/Feakly"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://nexai.team/#founder",
+          "name": "Mikhail Korolev",
+          "jobTitle": "Founder & Principal Architect",
+          "birthDate": "2005",
+          "gender": "Male",
+          "nationality": "Russian",
+          "url": "https://nexai.team/about.html",
+          "image": "https://nexai.team/img.png",
+          "worksFor": { "@id": "https://nexai.team/#organization" },
+          "description": "Founder & Principal Architect (Est. 2005). Specializes in replacing manual routine with autonomous Python-based AI systems and custom business tools. Focus: Transparent Fixed Pricing, Clean Architecture, and Measurable Business Impact.",
+          "knowsAbout": [
+              "AI Agents",
+              "Python Development",
+              "Enterprise RAG",
+              "Fixed Price Development",
+              "Business Process Automation",
+              "Secure Data Pipelines"
+          ],
+          "sameAs": [
+            "https://github.com/Feakly",
+            "https://t.me/Feakly"
+          ]
         }
+      ]
+    }
+    </script>
+    <!-- END: NexAI GEO Data -->
 
-        /* 2. Принудительно красим буквы логотипа в ярко-белый */
+    <style>
+        .main-header {
+            background-color: rgba(10, 10, 10, 0.95) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
         .logo svg path[fill="#FFFFFF"] {
             fill: #FFFFFF !important;
             opacity: 1 !important;
         }
     </style>
-
-    <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Yandex.Metrika counter -->
+    <!-- Yandex.Metrika -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
         for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
         k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
         })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105663828', 'ym');
-
         ym(105663828, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/105663828" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
 
-    <!-- ====================================================== -->
-    <!-- ============= ЕДИНАЯ ШАПКА (С SVG ЛОГО) ============== -->
-    <!-- ====================================================== -->
     <header class="main-header" style="background-color: rgba(10, 10, 10, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
         <div class="container header-container">
-
-            <!-- Логотип с принудительными цветами -->
             <a href="index.html" class="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="257 400 530 204">
                     <g>
-                        <!-- ПЕРВАЯ ЧАСТЬ (ТЕКСТ): ПРИНУДИТЕЛЬНО БЕЛЫЙ -->
                         <path style="fill: #FFFFFF !important; opacity: 1 !important;" d="M 272.30 552.00 L 272.10 602.50 L 265.05 602.79 C261.17,602.96 257.99,602.73 257.98,602.29 C257.98,601.86 257.98,576.19 258.00,545.25 C258.03,491.29 258.11,488.77 260.05,483.59 C262.02,478.34 267.80,471.78 272.85,469.08 C277.06,466.83 285.73,465.85 291.75,466.95 C304.03,469.19 308.61,472.48 333.08,496.68 C345.50,508.96 355.90,519.00 356.19,519.00 C356.49,519.00 356.97,511.24 357.27,501.75 C357.88,482.20 359.65,473.52 365.58,461.00 C370.17,451.32 374.85,445.21 388.31,431.32 C399.13,420.15 399.28,419.92 399.43,415.03 C399.55,411.37 400.20,409.42 401.89,407.61 C407.20,401.97 414.93,401.75 419.44,407.11 C425.73,414.58 420.41,426.00 410.65,426.00 C406.17,426.00 405.99,426.13 399.24,434.25 C385.85,450.36 381.67,456.90 377.94,467.56 C373.83,479.32 372.88,486.78 372.39,511.00 C372.12,523.92 371.69,535.52 371.43,536.78 C370.31,542.10 364.03,544.62 358.68,541.88 C357.48,541.27 344.58,528.94 330.00,514.48 C305.16,489.85 303.16,488.10 298.05,486.59 C287.25,483.41 279.27,487.22 274.16,498.00 C272.69,501.10 272.48,507.30 272.30,552.00 ZM 480.23 540.98 L 479.97 569.00 L 465.98 569.00 L 466.50 489.50 L 472.58 489.21 L 478.66 488.91 L 494.12 508.71 C502.63,519.59 512.27,531.96 515.54,536.18 C518.82,540.41 521.84,543.90 522.25,543.93 C522.66,543.97 523.00,531.62 523.00,516.50 L 523.00 489.00 L 537.00 489.00 L 537.00 569.00 L 524.19 569.00 L 480.50 512.96 ZM 695.55 560.00 L 691.82 569.00 L 677.08 569.00 L 680.29 561.61 C682.06,557.54 690.03,539.55 698.00,521.62 L 712.50 489.03 L 719.50 489.02 L 726.50 489.01 L 734.43 506.75 C738.79,516.51 746.77,534.24 752.18,546.14 C757.58,558.04 762.00,568.05 762.00,568.39 C762.00,568.72 758.69,569.00 754.64,569.00 L 747.28 569.00 L 743.16 560.00 L 739.04 551.00 L 699.28 551.00 ZM 592.69 568.50 C578.03,572.85 562.22,567.72 554.94,556.24 C544.18,539.29 552.66,514.08 570.82,509.03 C572.84,508.47 577.65,508.01 581.50,508.02 C598.17,508.03 609.00,519.69 609.00,537.61 L 609.00 544.00 L 586.50 544.00 C571.46,544.00 564.00,544.35 564.00,545.05 C564.00,547.17 567.01,551.83 570.01,554.35 C576.60,559.90 586.23,560.14 594.39,554.97 L 599.05 552.02 L 602.77 555.53 L 606.50 559.04 L 602.12 563.02 C599.50,565.40 595.72,567.60 592.69,568.50 ZM 632.97 563.39 L 629.43 568.50 L 621.66 568.79 C620.87,568.82 620.15,568.86 619.49,568.90 C617.08,569.03 615.58,569.11 615.15,568.47 C614.45,567.42 616.68,564.40 622.60,556.38 C623.57,555.06 624.64,553.61 625.82,552.01 C635.58,538.71 635.70,538.47 634.11,536.01 C633.23,534.64 628.75,528.11 624.17,521.51 L 615.84 509.50 L 623.17 509.20 C623.76,509.18 624.30,509.15 624.80,509.12 C627.10,509.01 628.52,508.94 629.75,509.40 C632.03,510.25 633.63,512.91 638.84,520.47 L 644.17 528.22 L 657.03 509.00 L 672.10 509.00 L 668.87 513.75 C667.10,516.36 662.57,522.87 658.81,528.20 L 651.98 537.90 L 659.63 548.70 C663.83,554.64 668.83,561.64 670.72,564.25 L 674.17 569.00 L 658.31 569.00 L 651.03 558.40 L 643.75 547.80 L 640.12 553.04 C638.13,555.93 634.91,560.58 632.97,563.39 ZM 787.00 488.91 L 787.00 569.00 L 780.47 569.00 C776.16,569.00 773.77,568.57 773.46,567.75 C773.19,567.06 773.09,549.17 773.24,528.00 L 773.50 489.50 ZM 329.89 473.28 C331.75,476.46 333.10,479.21 332.89,479.39 C332.67,479.58 328.45,476.42 323.50,472.37 C306.43,458.41 292.62,453.47 273.00,454.31 C266.67,454.59 260.60,454.96 259.50,455.15 C257.66,455.47 257.48,454.87 257.21,447.88 L 256.92 440.27 L 260.09 439.63 C265.54,438.54 278.21,438.97 285.50,440.50 C289.35,441.30 296.33,443.84 301.00,446.13 C307.86,449.49 311.14,451.96 318.00,458.90 C322.67,463.63 328.02,470.10 329.89,473.28 ZM 705.59 538.15 C706.40,539.45 733.00,539.23 733.00,537.92 C733.00,535.55 719.67,505.93 718.94,506.69 C717.39,508.30 705.08,537.32 705.59,538.15 ZM 564.49 533.98 C564.87,534.60 571.15,535.00 580.56,535.00 C595.41,535.00 596.00,534.92 596.00,532.97 C596.00,529.60 593.41,524.46 590.57,522.24 C584.88,517.75 575.16,518.16 569.52,523.12 C566.09,526.13 563.33,532.10 564.49,533.98 ZM 407.00 418.00 C412.19,423.19 419.27,416.28 414.35,410.83 C413.43,409.82 411.86,409.00 410.85,409.00 C408.62,409.00 405.00,412.41 405.00,414.50 C405.00,415.33 405.90,416.90 407.00,418.00 Z" />
-
-                        <!-- ВТОРАЯ ЧАСТЬ (ВОЛНА): ПРИНУДИТЕЛЬНО СИНЯЯ -->
                         <path style="fill: #308ABF !important; opacity: 1 !important;" d="M 300.00 520.72 L 300.00 603.00 L 284.00 603.00 L 284.00 553.95 C284.00,501.56 284.08,500.63 288.94,498.03 C292.05,496.37 296.51,496.84 299.62,499.15 C301.20,500.34 313.52,512.22 327.00,525.57 C340.48,538.91 353.29,550.77 355.49,551.91 C360.99,554.79 368.63,554.72 373.04,551.75 C374.88,550.51 377.53,547.26 378.94,544.53 C381.42,539.72 381.52,538.76 382.18,514.53 C382.56,500.76 383.28,487.70 383.79,485.50 C388.71,464.19 396.13,452.55 419.26,429.86 C430.87,418.47 434.13,414.70 433.98,412.86 C433.54,407.68 434.12,405.72 436.92,402.92 C439.31,400.53 440.69,400.00 444.49,400.00 C447.04,400.00 450.00,400.46 451.06,401.03 C456.14,403.75 457.66,413.96 453.67,418.60 C451.79,420.78 450.26,421.40 445.78,421.77 L 440.23 422.23 L 427.97 436.23 C414.96,451.10 406.43,463.57 402.94,472.84 C398.55,484.51 397.88,490.31 397.17,523.00 L 396.48 554.50 L 392.99 560.98 C390.29,565.99 388.39,568.14 384.57,570.48 C380.04,573.26 378.92,573.50 370.57,573.50 C361.75,573.50 361.26,573.37 353.00,569.01 C345.42,565.00 342.09,562.15 322.25,542.62 ZM 404.53 602.09 C398.91,604.57 387.92,605.29 381.00,603.63 C369.72,600.93 360.49,595.46 349.68,585.09 C341.73,577.46 340.36,574.89 346.15,578.44 C372.89,594.86 398.49,591.45 406.19,570.45 C408.25,564.84 408.41,562.23 409.03,525.00 C409.58,491.10 409.93,484.72 411.45,480.00 C414.65,470.07 418.62,463.72 426.42,456.02 C433.24,449.30 433.95,448.24 433.47,445.52 C432.76,441.53 435.91,436.49 440.46,434.32 C447.86,430.79 455.99,436.56 456.00,445.35 C456.00,448.40 455.29,449.91 452.60,452.60 C449.68,455.52 448.51,456.00 444.35,456.03 C439.87,456.06 439.21,456.40 435.72,460.49 C431.05,465.95 426.38,475.74 425.02,482.89 C424.43,486.01 423.99,505.99 423.99,530.39 C423.97,574.89 423.53,580.12 419.08,588.85 C416.64,593.63 410.00,599.67 404.53,602.09 ZM 440.44 447.55 C442.30,450.39 445.55,450.72 448.17,448.35 C450.82,445.95 450.47,442.35 447.38,440.33 C445.04,438.80 444.50,438.77 442.14,440.09 C438.90,441.92 438.34,444.35 440.44,447.55 ZM 440.45 413.57 C443.35,418.00 450.00,415.83 450.00,410.45 C450.00,407.14 445.88,404.46 443.09,405.95 C439.64,407.80 438.61,410.76 440.45,413.57 Z" />
                     </g>
                 </svg>
             </a>
-
-            <!-- Универсальная навигация, которая работает со всех страниц -->
             <nav class="main-nav">
                 <a href="index.html#services">Услуги</a>
                 <a href="about.html">Наш подход</a>
@@ -87,97 +119,77 @@
         </div>
     </header>
 
-    <!-- Фоновая анимация (Паутинка) -->
     <canvas id="patternCanvas"></canvas>
 
     <main>
         <section id="engineer-page" class="section">
             <div class="container">
 
-                <!-- Интро с фото -->
+                <!-- ВНЕДРИЛИ ОБНОВЛЕНИЯ ЗДЕСЬ (ВИЗУАЛ) -->
                 <div class="engineer-intro-block reveal" style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; margin-bottom: 120px;">
                     <img src="img.png" alt="Королев Михаил" style="width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 2px solid var(--border);">
                     <div class="engineer-info">
-                        <div class="title" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px;">Ведущий разработчик NexAI</div>
-                        <div class="name" style="font-family: var(--font-mono); font-size: 3rem; font-weight: 600; color: var(--text-primary);">Королев Михаил</div>
+                        <div class="title" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px;">
+                            Founder & Principal Architect
+                        </div>
+                        <div class="name" style="font-family: var(--font-mono); font-size: 3rem; font-weight: 600; color: var(--text-primary);">
+                            Королев Михаил
+                        </div>
+                        <!-- МЫ УБРАЛИ "Based in Togliatti" визуально и сделали стильные теги -->
+                        <p style="color: var(--text-secondary); margin-top: 15px; font-family: var(--font-mono); font-size: 0.95rem;">
+                            // Design. Build. Scale.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Основной текст (Принцип работы) -->
                 <div class="path-intro reveal" style="text-align: center; max-width: 65ch; margin: 0 auto 80px auto;">
                     <h3 class="sub-heading">Принцип работы</h3>
 
                     <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary);">
-                        Моя задача — превратить идею или процесс в надежный механизм. Сделать так, чтобы техническая часть перестала быть для вас проблемой.
+                        Моя задача — превратить идею в надежный механизм. Я принадлежу к новому поколению Digital Native: мне не нужно переучиваться под ИИ, я сразу строю архитектуру на современных принципах Agentic Workflows.
                     </p>
-
                     <p style="color: var(--text-primary); font-weight: 500; margin: 30px 0;">
-                        Никакой «магии» и черных ящиков. Только документированная логика, масштабируемая архитектура и предсказуемый результат.
+                        Никакой «магии». Только документированная логика и предсказуемый результат.
                     </p>
-
                     <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary);">
-                        В итоге вы получаете систему, готовую к автономному плаванию. Она не требует постоянных платных правок. Я остаюсь на связи для развития проекта, но базовая стабильность заложена сразу и не требует подписки на моё время.
+                        Вы получаете систему, готовую к автономному плаванию. Она не требует постоянных платных правок и подписки на моё время.
                     </p>
                 </div>
 
-                <!-- Стили Timeline (внутренние, чтобы не менять общий CSS) -->
-                <style>
-                    .timeline-list { list-style: none; padding-left: 20px; position: relative; border-left: 1px solid var(--border); }
-                    .timeline-item { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; padding: 30px 0 50px 40px; position: relative; }
-                    .timeline-item:last-child { padding-bottom: 0; }
-                    .timeline-item::before { content: ''; position: absolute; left: -8px; top: 42px; width: 15px; height: 15px; border-radius: 50%; background-color: var(--background); border: 2px solid var(--accent); z-index: 1; }
-                    .timeline-step h3 { font-size: 1.3rem; font-weight: 600; color: var(--text-primary); }
-                    .timeline-description p { color: var(--text-secondary); line-height: 1.7; max-width: 65ch; }
-                    @media (max-width: 768px) {
-                        .timeline-item { grid-template-columns: 1fr; padding-left: 25px; gap: 20px; }
-                        .timeline-list { padding-left: 10px; }
-                        .timeline-item::before { left: -8px; top: 12px; }
-                        .engineer-intro-block { grid-template-columns: 1fr !important; text-align: center; }
-                        .engineer-info .name { font-size: 2.2rem !important; }
-                        img[alt="Королев Михаил"] { margin: 0 auto; }
-                    }
-                </style>
-
-                <!-- Хронология (Полные тексты) -->
                 <ol class="timeline-list">
                     <li class="timeline-item reveal">
                         <div class="timeline-step">
-                            <h3>Адаптивность и обучение в бою</h3>
+                            <h3>Практика важнее теории</h3>
                         </div>
                         <div class="timeline-description">
-                            <p>Мой путь в IT — это не академическая зубрежка, а практика. Курсы дали только синтаксис, все остальное я брал штурмом. Я сознательно брал проекты, которые требовали навыков выше моих текущих, и осваивал инструменты прямо в процессе реализации. Я не тратил годы на теорию, а сразу адаптировался под запросы рынка. Я не боюсь неизвестности. Если для вашего проекта нужна новая технология — я освою её и внедрю быстрее, чем «теоретики» прочитают документацию.</p>
+                            <p>Мой путь в IT — это решение реальных задач бизнеса, а не академическая теория. Я сознательно беру проекты, требующие современных решений (LLM, RAG, High-load), и внедряю их быстрее, чем большие интеграторы успевают согласовать ТЗ.</p>
                         </div>
                     </li>
                     <li class="timeline-item reveal">
                         <div class="timeline-step">
-                            <h3>Навык говорить на вашем языке</h3>
+                            <h3>Говорю на вашем языке</h3>
                         </div>
                         <div class="timeline-description">
-                            <p>Следующим этапом стала работа в реальной школе в рамках государственной программы от 1С. Я учил школьников не просто нажимать кнопки, а понимать логику кода и баз данных. Это стало лучшей тренировкой коммуникации: я научился объяснять сложнейшие технические вещи простыми словами. В работе со мной вам не придется «учить словарь айтишника». Я слышу вашу бизнес-задачу и перевожу её в архитектуру, оставаясь понятным собеседником.</p>
+                            <p>В работе со мной вам не придется учить «словарь программиста». Опыт преподавания и работы с малым бизнесом научил меня переводить сложные архитектурные решения в понятные категории прибыли и эффективности.</p>
                         </div>
                     </li>
                     <li class="timeline-item reveal">
                         <div class="timeline-step">
-                            <h3>От кода к архитектуре в реальных проектах</h3>
+                            <h3>Гибридная модель: Architect + Core</h3>
                         </div>
                         <div class="timeline-description">
-                            <p>С ростом сложности задач я понял: узкое горлышко любого проекта — это не написание кода, а архитектурные решения. Поэтому сейчас я работаю по гибридной модели. Я не отдаю проект «на откуп» сотрудникам. Я лично закладываю фундамент, пишу критически важные модули и проверяю каждую строчку кода на этапе слияния. Техническую реализацию и масштабирование я доверяю проверенной команде. Это позволяет нам запускать мощные продукты в сроки, недостижимые для одиночек.</p>
+                            <p>Узкое горлышко любого проекта — это не код, а архитектура. Поэтому я лично проектирую систему, а техническую реализацию и масштабирование выполняет моя инженерная команда (Engineering Core). Это позволяет запускать мощные продукты в сроки, недостижимые для одиночек.</p>
                         </div>
                     </li>
                 </ol>
 
-                <!-- Блок CTA -->
                 <div class="reveal" style="margin: 80px auto 0 auto; text-align: center; padding: 50px 30px; background: linear-gradient(180deg, rgba(48, 138, 191, 0.05) 0%, rgba(0,0,0,0) 100%); border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 12px; max-width: 800px;">
-
                     <h3 style="font-family: var(--font-mono); font-size: 1.6rem; margin-bottom: 20px; color: var(--text-primary);">
                         Готовы к предметному разговору?
                     </h3>
-
-                    <!-- Увеличенный шрифт CTA -->
                     <p style="font-size: 1.15rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 30px; max-width: 650px; margin-left: auto; margin-right: auto;">
-                        Я не продаю «часы разработки», я предлагаю решение конкретной бизнес-задачи. Напишите мне — без лишней бюрократии обсудим, как технически реализовать вашу идею.
+                        Я не продаю «часы разработки», я предлагаю решение конкретной бизнес-задачи с фиксированной ценой.
                     </p>
-
                     <a href="index.html#contact" class="cta-button" style="display: inline-block; padding: 16px 40px; background-color: var(--accent); color: white; text-decoration: none; font-family: var(--font-mono); font-weight: 500; border-radius: 4px; transition: all 0.3s;">
                         [ Написать мне в Telegram ]
                     </a>
@@ -192,8 +204,9 @@
             <div class="footer-grid">
                 <div class="footer-column footer-about">
                     <a href="index.html" class="footer-logo">NexAI</a>
+                    <!-- Copyright -->
                     <p class="copyright">
-                        &copy; 2025 NexAI. Все права защищены.<br>
+                        &copy; 2026 NexAI. Engineering by Mikhail Korolev & Team.<br>
                         Система. Код. Результат.
                     </p>
                 </div>
@@ -217,32 +230,25 @@
         </div>
     </footer>
 
-    <!-- Скрипт для анимации появления и фона -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-        // === ЛОГИКА БУРГЕР-МЕНЮ ===
-    const burgerBtn = document.querySelector('.burger-btn');
-    const nav = document.querySelector('.main-nav');
-    const navLinks = document.querySelectorAll('.main-nav a');
-
-    if (burgerBtn && nav) {
-        // Открытие/закрытие по кнопке
-        burgerBtn.addEventListener('click', () => {
-            burgerBtn.classList.toggle('active');
-            nav.classList.toggle('active');
-            document.body.classList.toggle('modal-open'); // Блокируем прокрутку фона
-        });
-
-        // Закрытие меню при клике на любую ссылку
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                burgerBtn.classList.remove('active');
-                nav.classList.remove('active');
-                document.body.classList.remove('modal-open');
-            });
-        });
-    }
-            // Анимация появления при скролле
+            const burgerBtn = document.querySelector('.burger-btn');
+            const nav = document.querySelector('.main-nav');
+            const navLinks = document.querySelectorAll('.main-nav a');
+            if (burgerBtn && nav) {
+                burgerBtn.addEventListener('click', () => {
+                    burgerBtn.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    document.body.classList.toggle('modal-open');
+                });
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        burgerBtn.classList.remove('active');
+                        nav.classList.remove('active');
+                        document.body.classList.remove('modal-open');
+                    });
+                });
+            }
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -253,7 +259,6 @@
             }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
 
-            // Анимация фона (Canvas)
             function initStaticPattern() {
                 const canvas = document.getElementById('patternCanvas');
                 if (!canvas) return;
