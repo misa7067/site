@@ -5,19 +5,19 @@
     <div class="container">
         <div class="footer-grid">
 
-            <!-- Колонка 1: Лого и копирайт -->
+            <!-- Колонка 1: Лого и юридическая инфо -->
             <div class="footer-column footer-about">
                 <a href="index.html" class="footer-logo">NexAI</a>
-                <p class="copyright">
-                    &copy; 2025 NexAI. Разработка и автоматизация.<br>
-                    <br>
-                    <!-- Юридический блок (чуть мельче и бледнее) -->
-                    <span style="font-size: 0.85em; opacity: 0.6; line-height: 1.6; display: block;">
+                <div class="copyright-block">
+                    <p>&copy; 2026 NexAI. Разработка и автоматизация.</p>
+
+                    <!-- Юридический блок -->
+                    <div style="font-size: 0.8em; opacity: 0.5; line-height: 1.5; margin-top: 15px;">
                         ИП Королев М.А.<br>
                         ИНН 632416774349<br>
                         ОГРНИП 325632700217522
-                    </span>
-                </p>
+                    </div>
+                </div>
             </div>
 
             <!-- Колонка 2: Навигация -->
@@ -25,9 +25,9 @@
                 <h5>Навигация</h5>
                 <ul>
                     <li><a href="index.html#services">Услуги</a></li>
-                    <li><a href="index.html#approach">Подход</a></li> <!-- Или about.html, см. примечание ниже -->
+                    <li><a href="index.html#approach">Подход</a></li>
                     <li><a href="index.html#projects">Кейсы</a></li>
-                    <li><a href="index.html#contact">Контакты</a></li>
+                    <li><a href="pay.html">Реквизиты</a></li> <!-- Добавил ссылку на новую страницу -->
                 </ul>
             </div>
 
@@ -36,13 +36,76 @@
                 <h5>Документы</h5>
                 <ul>
                     <li><a href="privacy.html">Политика конфиденциальности</a></li>
-                    <li><a href="terms.html">Условия использования</a></li>
+                    <li><a href="terms.html">Оферта / Условия</a></li>
                 </ul>
+            </div>
+
+            <!-- Колонка 4: Контакты и Соцсети (НОВАЯ) -->
+            <div class="footer-column footer-contacts">
+                <h5>Мы на связи</h5>
+                <ul style="margin-bottom: 20px;">
+                    <!-- Почта -->
+                    <li>
+                        <a href="mailto:contact@nexai.team" style="color: var(--accent); font-family: var(--font-mono);">
+                            contact@nexai.team
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Иконки соцсетей -->
+                <div class="social-links" style="display: flex; gap: 12px;">
+
+                    <!-- Telegram Канал -->
+                    <a href="https://t.me/NexAI_Team" target="_blank" class="social-btn" title="Telegram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </a>
+
+                    <!-- TenChat -->
+                    <a href="https://tenchat.ru/Feakly" target="_blank" class="social-btn" title="TenChat">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+
+                    <!-- GitHub -->
+                    <a href="https://github.com/misa7067" target="_blank" class="social-btn" title="GitHub">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </a>
+
+                </div>
             </div>
 
         </div>
     </div>
 </footer>
+
+<!-- Стили для соцсетей (можно перенести в style.css, но будут работать и тут) -->
+<style>
+    .social-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .social-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--accent);
+        border-color: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    /* Адаптив для 4-х колонок */
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Авто-распределение */
+        gap: 40px;
+    }
+</style>
 <!-- ====================================================== -->
 <!-- ==================== КОНЕЦ ФУТЕРА ==================== -->
 <!-- ====================================================== -->

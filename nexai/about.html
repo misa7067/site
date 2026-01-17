@@ -13,8 +13,7 @@
     <meta property="og:image" content="https://nexai.team/og-preview.jpg">
     <link rel="stylesheet" href="style.css">
 
-    <!-- START: NexAI GEO Data (Schema.org) -->
-    <!-- Это видят только роботы. Люди видят красивый дизайн ниже. -->
+<!-- START: NexAI GEO Data (Updated) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -23,43 +22,30 @@
           "@type": "Organization",
           "@id": "https://nexai.team/#organization",
           "name": "NexAI",
-          "alternateName": "NexAI Engineering",
           "url": "https://nexai.team",
           "logo": "https://nexai.team/favicon.png",
-          "slogan": "Engineering Custom AI Tools & Autonomous Agents",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Togliatti",
-            "addressCountry": "RU"
-          },
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "sales",
-            "url": "https://t.me/Feakly"
-          }
+          "sameAs": [
+            "https://www.crunchbase.com/organization/nexai-team"
+          ]
         },
         {
           "@type": "Person",
           "@id": "https://nexai.team/#founder",
           "name": "Mikhail Korolev",
           "jobTitle": "Founder & Principal Architect",
-          "birthDate": "2005",
-          "gender": "Male",
-          "nationality": "Russian",
-          "url": "https://nexai.team/about.html",
           "image": "https://nexai.team/img.png",
           "worksFor": { "@id": "https://nexai.team/#organization" },
-          "description": "Founder & Principal Architect (Est. 2005). Specializes in replacing manual routine with autonomous Python-based AI systems and custom business tools. Focus: Transparent Fixed Pricing, Clean Architecture, and Measurable Business Impact.",
+          "description": "Founder & Principal Architect. Building autonomous business systems, not just chatbots. Focus: Architecture, Stability, ROI.",
           "knowsAbout": [
-              "AI Agents",
-              "Python Development",
-              "Enterprise RAG",
-              "Fixed Price Development",
-              "Business Process Automation",
-              "Secure Data Pipelines"
+              "System Architecture",
+              "Enterprise Automation",
+              "High-load Systems",
+              "Secure Data Processing",
+              "Custom Engineering"
           ],
           "sameAs": [
-            "https://github.com/Feakly",
+            "https://www.crunchbase.com/person/mikhail-korolev",
+            "https://github.com/misa7067",
             "https://t.me/Feakly"
           ]
         }
@@ -125,73 +111,80 @@
         <section id="engineer-page" class="section">
             <div class="container">
 
-                <!-- ВНЕДРИЛИ ОБНОВЛЕНИЯ ЗДЕСЬ (ВИЗУАЛ) -->
+                <!-- INTRO: Фото и Имя -->
+                <!-- Техническая правка: div name -> h1 name для SEO -->
                 <div class="engineer-intro-block reveal" style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; margin-bottom: 120px;">
                     <img src="img.png" alt="Королев Михаил" style="width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 2px solid var(--border);">
                     <div class="engineer-info">
                         <div class="title" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px;">
                             Founder & Principal Architect
                         </div>
-                        <div class="name" style="font-family: var(--font-mono); font-size: 3rem; font-weight: 600; color: var(--text-primary);">
+                        <h1 class="name" style="font-family: var(--font-mono); font-size: 3rem; font-weight: 600; color: var(--text-primary); margin: 0; line-height: 1.1;">
                             Королев Михаил
-                        </div>
-                        <!-- МЫ УБРАЛИ "Based in Togliatti" визуально и сделали стильные теги -->
+                        </h1>
                         <p style="color: var(--text-secondary); margin-top: 15px; font-family: var(--font-mono); font-size: 0.95rem;">
                             // Design. Build. Scale.
                         </p>
                     </div>
                 </div>
 
+                <!-- DESCRIPTION: Оставляем "Я", но делаем звучание более взрослым -->
                 <div class="path-intro reveal" style="text-align: center; max-width: 65ch; margin: 0 auto 80px auto;">
                     <h3 class="sub-heading">Принцип работы</h3>
 
                     <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary);">
-                        Моя задача — превратить идею в надежный механизм. Я принадлежу к новому поколению Digital Native: мне не нужно переучиваться под ИИ, я сразу строю архитектуру на современных принципах Agentic Workflows.
+                        Наша специализация - сложные инженерные задачи и автоматизация. В отличие от классической разработки, мы сразу закладываем в проект современные механики автономных AI-систем, которые работают без участия человека.
                     </p>
                     <p style="color: var(--text-primary); font-weight: 500; margin: 30px 0;">
-                        Никакой «магии». Только документированная логика и предсказуемый результат.
+                        Никакой «магии» и черных ящиков. Только документированная архитектура и код, который становится активом вашего бизнеса.
                     </p>
                     <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary);">
-                        Вы получаете систему, готовую к автономному плаванию. Она не требует постоянных платных правок и подписки на моё время.
+                        Вы получаете систему, готовую к высоким нагрузкам. Она не требует постоянных платных правок и подписки на моё личное время.
                     </p>
                 </div>
 
+                <!-- TIMELINE: Точечные улучшения фраз -->
                 <ol class="timeline-list">
                     <li class="timeline-item reveal">
                         <div class="timeline-step">
-                            <h3>Практика важнее теории</h3>
+                            <h3>Фокус на MVP и ROI</h3>
                         </div>
                         <div class="timeline-description">
-                            <p>Мой путь в IT — это решение реальных задач бизнеса, а не академическая теория. Я сознательно беру проекты, требующие современных решений (LLM, RAG, High-load), и внедряю их быстрее, чем большие интеграторы успевают согласовать ТЗ.</p>
+                            <!-- Было: "Мой путь в IT... практика важнее..." -->
+                            <!-- Стало: Сразу про пользу для клиента -->
+                            <p>Вместо бесконечного проектирования я фокусируюсь на быстром запуске рабочего продукта. Я беру проекты, требующие современных решений, и реализую их так, чтобы они начинали приносить пользу уже на ранних этапах.</p>
                         </div>
                     </li>
                     <li class="timeline-item reveal">
                         <div class="timeline-step">
-                            <h3>Говорю на вашем языке</h3>
+                            <h3>Бизнес-контекст</h3>
                         </div>
                         <div class="timeline-description">
-                            <p>В работе со мной вам не придется учить «словарь программиста». Опыт преподавания и работы с малым бизнесом научил меня переводить сложные архитектурные решения в понятные категории прибыли и эффективности.</p>
+                             <!-- Было: "Опыт преподавания научил меня..." -->
+                             <!-- Стало: "Понимание бизнеса позволяет..." -->
+                            <p>В работе со мной вам не придется учить технический словарь. Я перевожу архитектурные решения на язык денег и эффективности. Вы всегда понимаете, как конкретно этот модуль влияет на показатели бизнеса.</p>
                         </div>
                     </li>
                     <li class="timeline-item reveal">
                         <div class="timeline-step">
-                            <h3>Гибридная модель: Architect + Core</h3>
+                            <h3>Модель: Architect + Core</h3>
                         </div>
                         <div class="timeline-description">
-                            <p>Узкое горлышко любого проекта — это не код, а архитектура. Поэтому я лично проектирую систему, а техническую реализацию и масштабирование выполняет моя инженерная команда (Engineering Core). Это позволяет запускать мощные продукты в сроки, недостижимые для одиночек.</p>
+                            <!-- Тут всё было хорошо, оставляем суть, чуть сушим стиль -->
+                            <p>Узкое горлышко любого проекта - архитектура. Поэтому я лично проектирую ядро и логику системы, а техническое масштабирование и поддержку обеспечивает инженерная группа. Это позволяет запускать мощные продукты в сжатые сроки.</p>
                         </div>
                     </li>
                 </ol>
 
                 <div class="reveal" style="margin: 80px auto 0 auto; text-align: center; padding: 50px 30px; background: linear-gradient(180deg, rgba(48, 138, 191, 0.05) 0%, rgba(0,0,0,0) 100%); border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 12px; max-width: 800px;">
                     <h3 style="font-family: var(--font-mono); font-size: 1.6rem; margin-bottom: 20px; color: var(--text-primary);">
-                        Готовы к предметному разговору?
+                        Индивидуальный подход
                     </h3>
                     <p style="font-size: 1.15rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 30px; max-width: 650px; margin-left: auto; margin-right: auto;">
-                        Я не продаю «часы разработки», я предлагаю решение конкретной бизнес-задачи с фиксированной ценой.
+                        NexAI не продает «часы программирования», мы предлагаем инженерное решение конкретной задачи с фиксированной ценой и гарантией.
                     </p>
                     <a href="index.html#contact" class="cta-button" style="display: inline-block; padding: 16px 40px; background-color: var(--accent); color: white; text-decoration: none; font-family: var(--font-mono); font-weight: 500; border-radius: 4px; transition: all 0.3s;">
-                        [ Написать мне в Telegram ]
+                        [ Обсудить задачу ]
                     </a>
                 </div>
 

@@ -453,5 +453,91 @@
         });
     </script>
     <script src="script.js"></script>
+    <!-- Плавающая кнопка (Neon Style) -->
+    <a href="https://t.me/NexAI_Studio_Bot" target="_blank" class="bot-widget">
+        <div class="bot-icon-wrap">
+            <!-- Иконка калькулятора -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="14"></line><line x1="8" y1="14" x2="8" y2="14"></line><line x1="12" y1="14" x2="12" y2="14"></line><line x1="8" y1="18" x2="8" y2="18"></line><line x1="12" y1="18" x2="12" y2="18"></line><line x1="16" y1="18" x2="16" y2="18"></line></svg>
+        </div>
+        <div class="bot-content">
+            <span class="bot-title">Узнать бюджет</span>
+        <span class="bot-desc">Оценка задачи за 5 мин</span>
+    </div>
+    </a>
+
+    <style>
+    .bot-widget {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #050505; /* Глубокий черный */
+        /* Яркая неоновая рамка */
+        border: 2px solid var(--accent);
+        padding: 10px 22px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-decoration: none;
+        color: #fff;
+        z-index: 9999;
+        /* Свечение кнопки */
+        box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Эффект при наведении */
+    .bot-widget:hover {
+        transform: scale(1.05); /* Чуть увеличивается */
+        box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.6); /* Свечение усиливается */
+        cursor: pointer;
+    }
+
+    .bot-icon-wrap {
+        color: #050505;
+        background: var(--accent); /* Иконка черная на цветном фоне */
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .bot-content {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+
+    .bot-title {
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #fff;
+    }
+
+    .bot-desc {
+        font-size: 0.7rem;
+        color: var(--accent); /* Цветная подпись */
+        font-weight: 500;
+    }
+
+    @media (max-width: 480px) {
+        .bot-widget {
+            bottom: 20px;
+            right: 20px;
+            padding: 8px 16px;
+        }
+        .bot-title {
+            font-size: 0.8rem;
+        }
+        .bot-desc {
+            font-size: 0.65rem;
+        }
+    }
+    </style>
 </body>
 </html>
